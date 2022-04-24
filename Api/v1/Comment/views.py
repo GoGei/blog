@@ -5,24 +5,23 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .serializers import PostSerializer, PostCreateUpdateSerializer, PostListSerializer
-from core.Post.models import Post
-from core.Likes.models import PostLike
+from .serializers import CommentSerializer, CommentCreateUpdateSerializer, CommentListSerializer
+from core.Comment.models import Comment
+from core.Likes.models import CommentLike
 
 
-class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.select_related('author', 'category').ordered()
-    serializer_class = PostSerializer
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.select_related('author', 'post').ordered()
+    serializer_class = CommentSerializer
     serializer_map = {
-        'create': PostCreateUpdateSerializer,
-        'update': PostCreateUpdateSerializer,
-        'list': PostListSerializer,
+        'create': CommentCreateUpdateSerializer,
+        'update': CommentCreateUpdateSerializer,
+        'list': CommentListSerializer,
     }
 
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
-    search_fields = ['title', 'author__email']
-    filterset_fields = ['category', 'author']
-    ordering_fields = ['title']
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    search_fields = ['post__title', 'author__email']
+    filterset_fields = ['post', 'author']
 
     def get_serializer_class(self):
         serializer = self.serializer_map.get(self.action, self.serializer_class)
@@ -33,8 +32,8 @@ class PostViewSet(viewsets.ModelViewSet):
         queryset = self.filter_queryset(self.get_queryset())
 
         queryset = queryset.annotate(
-            is_liked=RawSQL('select is_liked from post_likes where post_id=post.id and user_id=%s',
-                               (user.id,)))  # noqa
+            is_liked=RawSQL('select is_liked from comment_likes where comment_id=comment.id and user_id=%s',
+                            (user.id,)))  # noqa
 
         page = self.paginate_queryset(queryset)
         if page is not None:
@@ -46,24 +45,24 @@ class PostViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get', 'post'], permission_classes=[IsAuthenticated])
     def like(self, request, pk=None):
-        post = self.get_object()
+        comment = self.get_object()
         user = request.user
-        obj, _ = PostLike.objects.get_or_create(post=post, user=user)
+        obj, _ = CommentLike.objects.get_or_create(comment=comment, user=user)
         obj.like()
         return Response(status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['get', 'post'], permission_classes=[IsAuthenticated])
     def dislike(self, request, pk=None):
-        post = self.get_object()
+        comment = self.get_object()
         user = request.user
-        obj, _ = PostLike.objects.get_or_create(post=post, user=user)
+        obj, _ = CommentLike.objects.get_or_create(comment=comment, user=user)
         obj.dislike()
         return Response(status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['get', 'post'], permission_classes=[IsAuthenticated])
     def deactivate(self, request, pk=None):
-        post = self.get_object()
+        comment = self.get_object()
         user = request.user
-        obj, _ = PostLike.objects.get_or_create(post=post, user=user)
+        obj, _ = CommentLike.objects.get_or_create(comment=comment, user=user)
         obj.deactivate()
         return Response(status=status.HTTP_200_OK)

@@ -13,6 +13,9 @@ class Post(CrmMixin, SlugifyMixin):
     class Meta:
         db_table = 'post'
 
+    def __str__(self):
+        return self.label
+
     @property
     def label(self):
         return self.title or self.slug or f'Post: {self.id}'

@@ -10,7 +10,10 @@ class Category(CrmMixin, SlugifyMixin):
     class Meta:
         db_table = 'category'
 
+    def __str__(self):
+        return self.label
+
     @property
     def label(self):
-        return self.name or self.slug or f'Post: {self.id}'
+        return self.name or self.slug or f'Category: {self.id}'
 

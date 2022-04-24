@@ -56,7 +56,7 @@ class CrmMixin(models.Model):
 
 class SlugifyMixin(models.Model):
     SLUGIFY_FIELD = ''
-    slug = models.SlugField(max_length=255, unique=True, db_index=True)
+    slug = models.SlugField(max_length=255, unique=True, null=True, db_index=True)
 
     class Meta:
         abstract = True
@@ -71,7 +71,7 @@ class SlugifyMixin(models.Model):
 
     def assign_slug(self):
         slug = slugify(getattr(self, self.SLUGIFY_FIELD))
-        self.slug = slug if slug <= 255 else slug[:255]
+        self.slug = slug if len(slug) <= 255 else slug[:255]
         self.save()
         return self
 
