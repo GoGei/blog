@@ -18,3 +18,6 @@ dumps/
 logger/
 *.log
 *.log.*
+
+graphs/
+

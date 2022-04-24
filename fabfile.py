@@ -73,3 +73,17 @@ def deploy_local(branch=None):
 def check():
     local('python manage.py check')
     local('time flake8 ./core/')
+
+
+@task
+def create_graph_models(*args):
+    date = datetime.now().strftime("%Y-%m-%d_%H%M")
+    dot_file_name = f'graphs/project_{date}.dot'
+
+    models = ''
+    if args:
+        models = f' -I {",".join(args)} '
+
+    with cd(PROJECT_ROOT):
+        local('mkdir -p graphs')
+        local(f'./manage.py graph_models -a {models} -o {dot_file_name}')
