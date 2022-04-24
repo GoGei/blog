@@ -74,3 +74,23 @@ class SlugifyMixin(models.Model):
         self.slug = slug if slug <= 255 else slug[:255]
         self.save()
         return self
+
+
+class LikeMixin(models.Model):
+    is_liked = models.BooleanField(null=True, default=None)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, related_name='+')
+
+    class Meta:
+        abstract = True
+
+    def like(self):
+        self.is_liked = True
+        self.save()
+
+    def dislike(self):
+        self.is_liked = False
+        self.save()
+
+    def deactivate(self):
+        self.is_liked = None
+        self.save()

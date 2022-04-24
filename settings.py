@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'core.Category',
     'core.Post',
     'core.Comment',
+    'core.Likes',
 ]
 
 AUTH_USER_MODEL = 'User.User'
