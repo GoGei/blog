@@ -13,7 +13,6 @@ class CategoryTests(TestCase):
         qs = Category.objects.filter(pk=obj.pk)
         self.assertTrue(qs.exists())
         self.assertEqual(qs[0], obj)
-        self.assertTrue(obj.slug)
 
     def test_delete(self):
         obj = CategoryFactory.create()
