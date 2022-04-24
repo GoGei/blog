@@ -43,8 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'django_hosts',
-    'rest_framework',
     'django_filters',
+    'rest_framework',
+    'drf_yasg2',
     'core.User',
     'core.Category',
     'core.Post',
@@ -74,6 +75,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             BASE_DIR + 'core/templates/',
+            BASE_DIR + 'Blog/templates/',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -169,3 +171,5 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning'
 }
+
+API_DOCUMENTATION = True
