@@ -23,6 +23,8 @@ SECRET_KEY = 'secret-key'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+API_DOCUMENTATION = True
+DEBUG_TOOLBAR = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -64,6 +66,15 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# redefine in local_settings
+# if DEBUG and DEBUG_TOOLBAR:
+#     INSTALLED_APPS += ('debug_toolbar', )
+#     MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
+
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 ROOT_HOSTCONF = 'hosts'
@@ -171,5 +182,3 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning'
 }
-
-API_DOCUMENTATION = True
