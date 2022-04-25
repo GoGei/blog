@@ -5,18 +5,10 @@
     <main role="main" class="container">
         <div class="row">
             <div class="col-md-8 blog-main">
-                <h3 class="pb-3 mb-4 font-italic border-bottom">
-                    Category name
-                </h3>
-
-                {% for x in '123456'|make_list %}
-                    <div class="blog-post">
-                        <h2 class="blog-post-title">Title</h2>
-                        <p class="blog-post-meta">Created TIME by <a href="#">AUTHOR</a></p>
-                        <p>Text of the post</p>
-                    </div>
+                <h3 class="pb-3 mb-4 font-italic border-bottom">Category name</h3>
+                {% for post in '123456'|make_list %}
+                    {% include 'Blog/Home/blog_post_card.html' with post=post %}
                 {% endfor %}
-
             </div>
 
             <aside class="col-md-4 blog-sidebar">
@@ -28,6 +20,9 @@
                 <div class="p-3">
                     <h4 class="font-italic">Categories</h4>
                     <ol class="list-unstyled mb-0">
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        </form>
                         <li><a href="#">March 2014</a></li>
                         <li><a href="#">February 2014</a></li>
                         <li><a href="#">January 2014</a></li>
