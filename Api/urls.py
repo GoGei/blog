@@ -7,6 +7,7 @@ from .routers import router_v1
 app_name = 'api'
 
 urlpatterns = [
+    url(r'^', include('urls')),
     url(r'^', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^v1/', include((router_v1.urls, 'api'), namespace='api-v1')),
 ]

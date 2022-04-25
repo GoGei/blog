@@ -16,4 +16,3 @@ class Category(CrmMixin, SlugifyMixin):
     @property
     def label(self):
         return self.name or self.slug or f'Category: {self.id}'
-
