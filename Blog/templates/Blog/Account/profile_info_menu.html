@@ -1,0 +1,12 @@
+<h2>Info</h2>
+<button type="button" class="btn btn-outline-secondary">Add post</button>
+<hr>
+
+{% for x in '123456'|make_list %}
+    <div class="blog-post">
+        <h2 class="blog-post-title">Title</h2>
+        <p>Text of the post</p>
+        <button type="button" class="btn btn-outline-secondary">Edit post</button>
+        <button type="button" class="btn btn-outline-secondary">View post</button>
+    </div>
+{% endfor %}

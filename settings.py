@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg2',
     'scripts',
+    'core.Utils',
     'core.User',
     'core.Category',
     'core.Post',
