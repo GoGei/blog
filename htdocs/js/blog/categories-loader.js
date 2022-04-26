@@ -25,7 +25,7 @@ $(document).ready(function () {
 $('#categories-container').on('click', 'li', function () {
     updateUrlParams($(this));
     updatePageHeader($(this));
-    loadPosts();
+    loadPosts('', true);
 });
 
 

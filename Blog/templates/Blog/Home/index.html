@@ -11,7 +11,7 @@
                     <!-- Category name -->
                 </h3>
                 <div id="posts-container" data-posts-url="{% host_url 'api:posts-list' host 'api' %}"
-                     data-posts-next-url="">
+                     data-posts-next-url="" data-posts-render-url="{% url 'blog-render-posts' %}">
                     <!-- posts container -->
                 </div>
             </div>
