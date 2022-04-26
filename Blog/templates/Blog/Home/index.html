@@ -13,9 +13,6 @@
                 <div id="posts-container" data-posts-url="{% host_url 'api:posts-list' host 'api' %}"
                      data-posts-next-url="">
                     <!-- posts container -->
-                    {% for post in '123456'|make_list %}
-                    {% include 'Blog/Home/blog_post_card.html' with post=post %}
-                {% endfor %}
                 </div>
             </div>
 

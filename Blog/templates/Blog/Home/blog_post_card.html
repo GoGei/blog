@@ -1,6 +1,6 @@
 <div class="blog-post">
-    <h2 class="blog-post-title">Title</h2>
-    <p class="blog-post-meta">Created TIME by <a href="#">AUTHOR</a></p>
-    <p>Text of the post</p>
+    <h2 class="blog-post-title">{{ post.title }}</h2>
+    <p class="blog-post-meta">Created by <a href="#">{{ post.author.label }}</a></p>
+    {{ post.text|safe|escape }}
     <a href="">Read more...</a>
 </div>
