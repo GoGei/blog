@@ -1,14 +1,19 @@
 {% extends 'Blog/base.html' %}
-{% load static %}
+{% load static filters hosts %}
 
 {% block body %}
     <main role="main" class="container">
         <div class="row">
             <div class="col-md-8 blog-main">
-                <h3 class="pb-3 mb-4 font-italic border-bottom">Category name</h3>
-                {% for post in '123456'|make_list %}
-                    {% include 'Blog/Home/blog_post_card.html' with post=post %}
-                {% endfor %}
+                <h3 class="pb-3 mb-4 font-italic border-bottom" id="category-name"
+                    data-category-name-url="{% host_url 'api:categories-name-by-slug' host 'api' %}"
+                    data-category-id-url="{% host_url 'api:categories-id-by-slug' host 'api' %}">
+                    <!-- Category name -->
+                </h3>
+                <div id="posts-container" data-posts-url="{% host_url 'api:posts-list' host 'api' %}"
+                     data-posts-next-url="">
+                    <!-- posts container -->
+                </div>
             </div>
 
             <aside class="col-md-4 blog-sidebar">
@@ -19,22 +24,11 @@
 
                 <div class="p-3">
                     <h4 class="font-italic">Categories</h4>
-                    <ol class="list-unstyled mb-0">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        </form>
-                        <li><a href="#">March 2014</a></li>
-                        <li><a href="#">February 2014</a></li>
-                        <li><a href="#">January 2014</a></li>
-                        <li><a href="#">December 2013</a></li>
-                        <li><a href="#">November 2013</a></li>
-                        <li><a href="#">October 2013</a></li>
-                        <li><a href="#">September 2013</a></li>
-                        <li><a href="#">August 2013</a></li>
-                        <li><a href="#">July 2013</a></li>
-                        <li><a href="#">June 2013</a></li>
-                        <li><a href="#">May 2013</a></li>
-                        <li><a href="#">April 2013</a></li>
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                           id="categories-search">
+                    <ol class="list-unstyled mb-0" id="categories-container"
+                        data-categories-url="{% host_url 'api:categories-list' host 'api' %}">
+                        <!-- categories container -->
                     </ol>
                 </div>
 
@@ -53,6 +47,7 @@
 
 {% block extrajs %}
     <script src="{% static 'js/blog/posts-loader.js' %}"></script>
+    <script src="{% static 'js/blog/categories-loader.js' %}"></script>
     <script>
         Holder.addTheme('thumb', {
             bg: '#55595c',
