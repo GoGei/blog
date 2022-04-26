@@ -6,7 +6,7 @@ from core.Category.models import Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'position', 'slug']
+        fields = ['id', 'name', 'position', 'slug', 'short_name']
 
 
 class CategoryCreateUpdateSerializer(serializers.ModelSerializer):
