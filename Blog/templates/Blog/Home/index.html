@@ -10,8 +10,10 @@
                     data-category-id-url="{% host_url 'api:categories-id-by-slug' host 'api' %}">
                     <!-- Category name -->
                 </h3>
-                <div id="posts-container" data-posts-url="{% host_url 'api:posts-list' host 'api' %}"
-                     data-posts-next-url="" data-posts-render-url="{% url 'blog-render-posts' %}">
+                <div id="posts-container"
+                     data-posts-url="{% host_url 'api:posts-list' host 'api' %}"
+                     data-posts-next-url=""
+                     data-posts-render-url="{% url 'blog-render-posts' %}">
                     <!-- posts container -->
                 </div>
             </div>
@@ -27,7 +29,8 @@
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
                            id="categories-search">
                     <ol class="list-unstyled mb-0" id="categories-container"
-                        data-categories-url="{% host_url 'api:categories-list' host 'api' %}">
+                        data-categories-url="{% host_url 'api:categories-list' host 'api' %}"
+                        data-categories-render-url="{% url 'blog-render-categories' %}">
                         <!-- categories container -->
                     </ol>
                 </div>

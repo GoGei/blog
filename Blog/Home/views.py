@@ -15,3 +15,13 @@ def render_posts(request):
         'Blog/Home/blog_posts_render.html',
         {'posts': data})
     return JsonResponse({'content': content})
+
+
+def render_categories(request):
+    data = json.loads(request.GET.get('categories'))
+
+    content = render_to_string(
+        'Blog/Home/blog_categories_render.html',
+        {'categories': data},
+        request=request)
+    return JsonResponse({'content': content})
