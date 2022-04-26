@@ -25,9 +25,9 @@
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
                 <nav class="navbar navbar-light bg-light justify-content-between">
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    </form>
+{#                    <form class="form-inline">#}
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="posts-search">
+{#                    </form>#}
                 </nav>
                 {% if user.is_authenticated %}
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'blog-logout' %}">Logout</a>
@@ -89,7 +89,8 @@
 {% block body %}
 {% endblock %}
 
-<script src="{% static 'js/jquery.js' %}"></script>
+{#<script src="{% static 'js/jquery.js' %}"></script>#}
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
 {#<script src="{% static 'js/jquery-slim.min.js' %}"></script>#}
 <script src="{% static 'js/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
