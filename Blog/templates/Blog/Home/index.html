@@ -9,9 +9,12 @@
                     data-category-name-url="{% host_url 'api:categories-name-by-slug' host 'api' %}">
                     <!-- Category name -->
                 </h3>
-                {% for post in '123456'|make_list %}
+                <div id="posts-container" data-posts-url="{% host_url 'api:posts-list' host 'api' %}">
+                    <!-- posts container -->
+                    {% comment %}{% for post in '123456'|make_list %}
                     {% include 'Blog/Home/blog_post_card.html' with post=post %}
-                {% endfor %}
+                {% endfor %}{% endcomment %}
+                </div>
             </div>
 
             <aside class="col-md-4 blog-sidebar">
@@ -22,14 +25,12 @@
 
                 <div class="p-3">
                     <h4 class="font-italic">Categories</h4>
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <ol class="list-unstyled mb-0" id="categories-container"
-                            data-categories-url="{% host_url 'api:categories-list' host 'api' %}"
-                            data-posts-url="{% host_url 'api:posts-list' host 'api' %}">
-                            <!-- categories container -->
-                        </ol>
-                    </form>
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                           id="categories-search">
+                    <ol class="list-unstyled mb-0" id="categories-container"
+                        data-categories-url="{% host_url 'api:categories-list' host 'api' %}">
+                        <!-- categories container -->
+                    </ol>
                 </div>
 
                 <div class="p-3">

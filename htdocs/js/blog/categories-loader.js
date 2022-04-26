@@ -8,8 +8,9 @@ $(document).ready(function () {
         url: categoriesUrl,
         dataType: "json",
         success: function (data) {
-            $.map(data.results, function (category, i) {
-                $categoriesContainer.append(`<li data-category-id="${category.id}" 
+            $.map(data.results, function (category) {
+                $categoriesContainer.append(`<li class="category-row" 
+                                                data-category-id="${category.id}" 
                                                 data-category-name="${category.name}" 
                                                 data-category-slug="${category.slug}">
                                                 <a href="#">${category.short_name}</a></li>`)
@@ -24,7 +25,21 @@ $(document).ready(function () {
 $('#categories-container').on('click', 'li', function () {
     updateUrlParams($(this));
     updatePageHeader($(this));
-    loadCategoryPosts($(this));
+});
+
+
+$('#categories-search').on('keyup', function (){
+    let value = this.value;
+    let categories = $('.category-row');
+    $.map(categories, function (category){
+        let element = $(category)
+        let currentName = element.data('category-name');
+        if (currentName.toLowerCase().includes(value.toLowerCase())){
+            element.show();
+        } else {
+            element.hide();
+        }
+    });
 });
 
 
@@ -66,23 +81,4 @@ function getNameOfCategoryBySlug(slug, callback){
     } else {
         callback(name);
     }
-}
-
-
-function loadCategoryPosts(element) {
-    let $container = element.parent();
-    let postsUrl = $container.data('posts-url');
-
-    let filterData = {'category': element.data('category-id')};
-    $.ajax({
-        type: 'GET',
-        url: postsUrl,
-        data: filterData,
-        success: function (data) {
-            console.log(data);
-            $.map(data.results, function (post, i) {
-                // console.log(post);
-            })
-        }
-    })
 }

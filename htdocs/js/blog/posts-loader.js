@@ -5,3 +5,26 @@ $(window).on("scroll", function() {
 	     console.log('near buttom!');
 	}
 });
+
+
+function loadPosts() {
+    let $postsContainer = $('#posts-container');
+    let postsUrl = $postsContainer.data('posts-url');
+
+	let filterData = {};
+    let categoryId = '';
+    if (categoryId){
+    	filterData['category'] = categoryId;
+	}
+    $.ajax({
+        type: 'GET',
+        url: postsUrl,
+        data: filterData,
+        success: function (data) {
+            console.log(data);
+            $.map(data.results, function (post, i) {
+                // console.log(post);
+            })
+        }
+    })
+}
