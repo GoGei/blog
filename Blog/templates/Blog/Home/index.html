@@ -6,14 +6,16 @@
         <div class="row">
             <div class="col-md-8 blog-main">
                 <h3 class="pb-3 mb-4 font-italic border-bottom" id="category-name"
-                    data-category-name-url="{% host_url 'api:categories-name-by-slug' host 'api' %}">
+                    data-category-name-url="{% host_url 'api:categories-name-by-slug' host 'api' %}"
+                    data-category-id-url="{% host_url 'api:categories-id-by-slug' host 'api' %}">
                     <!-- Category name -->
                 </h3>
-                <div id="posts-container" data-posts-url="{% host_url 'api:posts-list' host 'api' %}">
+                <div id="posts-container" data-posts-url="{% host_url 'api:posts-list' host 'api' %}"
+                     data-posts-next-url="">
                     <!-- posts container -->
-                    {% comment %}{% for post in '123456'|make_list %}
+                    {% for post in '123456'|make_list %}
                     {% include 'Blog/Home/blog_post_card.html' with post=post %}
-                {% endfor %}{% endcomment %}
+                {% endfor %}
                 </div>
             </div>
 

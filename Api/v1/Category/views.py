@@ -25,12 +25,30 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def name_by_slug(self, request):
+        response = self._get_category_by_slug(request)
+        if isinstance(response, Response):
+            return response
+        elif isinstance(response, Category):
+            category = response
+            return Response({'name': category.short_name}, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['get'])
+    def id_by_slug(self, request):
+        response = self._get_category_by_slug(request)
+        if isinstance(response, Response):
+            return response
+        elif isinstance(response, Category):
+            category = response
+            return Response({'id': category.id}, status=status.HTTP_200_OK)
+
+    @classmethod
+    def _get_category_by_slug(cls, request):
         slug = request.GET.get('slug')
         if slug:
             category_qs = Category.objects.filter(slug=slug)
             if category_qs.exists():
                 category = category_qs.first()
-                return Response({'name': category.short_name}, status=status.HTTP_200_OK)
+                return category
             else:
                 return Response({'error': 'Not found'}, status=status.HTTP_404_NOT_FOUND)
         else:

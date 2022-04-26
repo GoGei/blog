@@ -1,30 +1,52 @@
-$(window).on("scroll", function() {
-	var scrollHeight = $(document).height();
-	var scrollPosition = $(window).height() + $(window).scrollTop();
-	if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
-	     console.log('near buttom!');
-	}
+$(document).ready(function () {
+    loadPosts();
 });
 
 
-function loadPosts() {
-    let $postsContainer = $('#posts-container');
-    let postsUrl = $postsContainer.data('posts-url');
+$(window).on("scroll", function () {
+    let scrollHeight = $(document).height();
+    let scrollPosition = $(window).height() + $(window).scrollTop();
+    if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+        let nextPostsUrl = $('#posts-container').data('posts-next-url');
+        loadPosts(nextPostsUrl);
+    }
+});
 
-	let filterData = {};
-    let categoryId = '';
-    if (categoryId){
-    	filterData['category'] = categoryId;
+
+function loadPosts(requestUrl='') {
+	let container = $('#posts-container');
+	if (!requestUrl) {
+		requestUrl = container.data('posts-url')
 	}
-    $.ajax({
-        type: 'GET',
-        url: postsUrl,
-        data: filterData,
-        success: function (data) {
-            console.log(data);
-            $.map(data.results, function (post, i) {
-                // console.log(post);
-            })
-        }
-    })
+
+	getData(function (data) {
+		console.log('data', data);
+		$.ajax({
+			type: 'GET',
+			url: requestUrl,
+			data: data,
+			success: function (posts) {
+				container.data('posts-next-url', posts.next);
+				$.map(posts.results, function (post) {
+					console.log(post.id);
+				})
+			}
+		});
+	});
+}
+
+
+function getData(callback) {
+	let data = {};
+
+	let url = new URL(document.location.href);
+	if (url.searchParams.has('category')) {
+		let slug = url.searchParams.get('category');
+		getIdOfCategoryBySlug(slug, function (categoryId) {
+			data['category'] = categoryId;
+			callback(data);
+		});
+	} else {
+		callback(data);
+	}
 }

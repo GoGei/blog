@@ -25,6 +25,7 @@ $(document).ready(function () {
 $('#categories-container').on('click', 'li', function () {
     updateUrlParams($(this));
     updatePageHeader($(this));
+    loadPosts();
 });
 
 
@@ -74,8 +75,24 @@ function getNameOfCategoryBySlug(slug, callback){
             categoryUrl, {'slug': slug}
         ).done(function (response) {
             if (response.name) {
-                name = response.name;
-                callback(name);
+                callback(response.name);
+            }
+        });
+    } else {
+        callback(name);
+    }
+}
+
+
+function getIdOfCategoryBySlug(slug, callback){
+    let categoryUrl = $('#category-name').data('category-id-url');
+    let name = 'Posts';
+    if (slug) {
+        $.get(
+            categoryUrl, {'slug': slug}
+        ).done(function (response) {
+            if (response.id) {
+                callback(response.id);
             }
         });
     } else {
