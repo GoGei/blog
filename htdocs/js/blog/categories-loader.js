@@ -6,26 +6,23 @@ $(document).ready(function () {
     $.ajax({
         type: 'GET',
         url: categoriesUrl,
-        dataType: "json",
+        data: {'ordering': 'position'},
         success: function (data) {
-            $.map(data.results, function (category) {
-                $categoriesContainer.append(`<li class="category-row" 
-                                                data-category-id="${category.id}" 
-                                                data-category-name="${category.name}" 
-                                                data-category-slug="${category.slug}">
-                                                <a href="#">${category.short_name}</a></li>`)
+            let categories = JSON.stringify(data.results);
+            let renderUrl = $categoriesContainer.data('categories-render-url');
+
+            $.ajax({
+                type: 'GET',
+                url: renderUrl,
+                data: {'categories': categories},
+                success: function (result) {
+                    $categoriesContainer.append(result.content);
+                },
             })
         }
     });
 
     updatePageHeader();
-});
-
-
-$('#categories-container').on('click', 'li', function () {
-    updateUrlParams($(this));
-    updatePageHeader($(this));
-    loadPosts();
 });
 
 
@@ -44,12 +41,12 @@ $('#categories-search').on('keyup', function (){
 });
 
 
-function updateUrlParams(element) {
-    let categorySlug = element.data('category-slug');
+$('#categories-container').on('click', 'li', function () {
+    let categorySlug = $(this).data('category-slug');
     let url = new URL(document.location.href);
     url.searchParams.set('category', categorySlug);
     window.history.pushState(null, '', url.toString());
-}
+});
 
 
 function updatePageHeader(element=null) {
@@ -63,7 +60,9 @@ function updatePageHeader(element=null) {
         slug = element.data('category-slug');
     }
 
-    getNameOfCategoryBySlug(slug, function (name) {$categoryNameHeader.html(name);})
+    getNameOfCategoryBySlug(slug, function (name) {
+        $categoryNameHeader.html(name);
+    })
 
 }
 

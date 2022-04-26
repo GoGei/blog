@@ -19,3 +19,7 @@ class Post(CrmMixin, SlugifyMixin):
     @property
     def label(self):
         return self.title or self.slug or f'Post: {self.id}'
+
+    @property
+    def created_date(self):
+        return self.created_stamp.strftime('%d %B, %Y')

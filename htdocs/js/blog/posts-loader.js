@@ -13,22 +13,32 @@ $(window).on("scroll", function () {
 });
 
 
-function loadPosts(requestUrl='') {
+function loadPosts(requestUrl='', clearContainer=false) {
 	let container = $('#posts-container');
 	if (!requestUrl) {
 		requestUrl = container.data('posts-url')
 	}
 
+	if (clearContainer){
+		container.empty();
+	}
+
 	getData(function (data) {
-		console.log('data', data);
 		$.ajax({
 			type: 'GET',
 			url: requestUrl,
 			data: data,
 			success: function (posts) {
 				container.data('posts-next-url', posts.next);
-				$.map(posts.results, function (post) {
-					console.log(post.id);
+				let postsData = JSON.stringify(posts.results);
+				let url = container.data('posts-render-url');
+				$.ajax({
+					type: 'GET',
+					url: url,
+					data: {'posts': postsData},
+					success: function (result) {
+						container.append(result.content);
+					}
 				})
 			}
 		});
