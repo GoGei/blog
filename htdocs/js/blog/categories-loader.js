@@ -66,30 +66,19 @@ function updatePageHeader(element = null) {
 
 
 function getNameOfCategoryBySlug(slug) {
-    let categoryUrl = $('#category-name').data('category-name-url');
-    let name = 'Posts';
-
-    if (slug) {
-        $.ajax({
-            type: 'GET',
-            async: false,
-            url: categoryUrl,
-            data: {'slug': slug},
-            success: function (response) {
-                if (response.name) {
-                    name = response.name;
-                }
-            }
-        });
-    }
-    return name;
+    let categoryData = getCategoryBySlugData(slug);
+    return categoryData?.name || 'Posts';
 }
 
 
 function getIdOfCategoryBySlug(slug) {
-    let categoryUrl = $('#category-name').data('category-id-url');
-    let categoryId = 0;
+    let categoryData = getCategoryBySlugData(slug);
+    return categoryData?.id || 0;
+}
 
+function getCategoryBySlugData(slug){
+    let categoryUrl = $('#category-name').data('category-get-by-slug-url');
+    let categoryData = {};
     if (slug) {
         $.ajax({
             type: 'GET',
@@ -97,11 +86,13 @@ function getIdOfCategoryBySlug(slug) {
             url: categoryUrl,
             data: {'slug': slug},
             success: function (response) {
-                if (response.id) {
-                    categoryId = response.id;
+                if (response.category) {
+                    categoryData = response.category
                 }
             }
         });
     }
-    return categoryId;
+
+    return categoryData
 }
+
