@@ -4,5 +4,5 @@
     <p class="blog-post-meta">Created {{ post.created_date }} by <a href="#">{{ post.author.label }}</a></p>
     {{ post.text|safe|escape }}
     <br>
-    <a href="">Read more...</a>
+    <a href="{% url 'blog-post-view' post.slug %}">Read more...</a>
 </div>
