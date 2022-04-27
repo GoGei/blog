@@ -13,7 +13,21 @@ $(window).on("scroll", function () {
 });
 
 
+$('#posts-search').on('keypress', function (e) {
+	if (e.which == 13) {
+		let value = this.value;
+		let url = new URL(document.location.href);
+		url.searchParams.set('search', value);
+		window.history.pushState(null, '', url.toString());
+
+		loadPosts('', true);
+	}
+});
+
+
 function loadPosts(requestUrl='', clearContainer=false) {
+	console.log('Load posts');
+
 	let container = $('#posts-container');
 	if (!requestUrl) {
 		requestUrl = container.data('posts-url')
@@ -23,40 +37,41 @@ function loadPosts(requestUrl='', clearContainer=false) {
 		container.empty();
 	}
 
-	getData(function (data) {
-		$.ajax({
-			type: 'GET',
-			url: requestUrl,
-			data: data,
-			success: function (posts) {
-				container.data('posts-next-url', posts.next);
-				let postsData = JSON.stringify(posts.results);
-				let url = container.data('posts-render-url');
-				$.ajax({
-					type: 'GET',
-					url: url,
-					data: {'posts': postsData},
-					success: function (result) {
-						container.append(result.content);
-					}
-				})
-			}
-		});
+	let data = getData();
+
+	$.ajax({
+		type: 'GET',
+		url: requestUrl,
+		data: data,
+		success: function (posts) {
+			container.data('posts-next-url', posts.next);
+			let postsData = JSON.stringify(posts.results);
+			let url = container.data('posts-render-url');
+			$.ajax({
+				type: 'GET',
+				url: url,
+				data: {'posts': postsData},
+				success: function (result) {
+					container.append(result.content);
+				}
+			})
+		}
 	});
 }
 
 
-function getData(callback) {
+function getData() {
 	let data = {};
 
 	let url = new URL(document.location.href);
 	if (url.searchParams.has('category')) {
 		let slug = url.searchParams.get('category');
-		getIdOfCategoryBySlug(slug, function (categoryId) {
-			data['category'] = categoryId;
-			callback(data);
-		});
-	} else {
-		callback(data);
+    	data['category'] = getIdOfCategoryBySlug(slug);
 	}
+
+	if (url.searchParams.has('search')) {
+    	data['search'] = url.searchParams.get('search');
+	}
+
+	return data;
 }

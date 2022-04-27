@@ -25,9 +25,8 @@
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
                 <nav class="navbar navbar-light bg-light justify-content-between">
-{#                    <form class="form-inline">#}
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="posts-search">
-{#                    </form>#}
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search for posts..."
+                               aria-label="Search" id="posts-search">
                 </nav>
                 {% if user.is_authenticated %}
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'blog-logout' %}">Logout</a>

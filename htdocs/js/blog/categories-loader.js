@@ -26,13 +26,13 @@ $(document).ready(function () {
 });
 
 
-$('#categories-search').on('keyup', function (){
+$('#categories-search').on('keyup', function () {
     let value = this.value;
     let categories = $('.category-row');
-    $.map(categories, function (category){
+    $.map(categories, function (category) {
         let element = $(category)
         let currentName = element.data('category-name');
-        if (currentName.toLowerCase().includes(value.toLowerCase())){
+        if (currentName.toLowerCase().includes(value.toLowerCase())) {
             element.show();
         } else {
             element.hide();
@@ -49,7 +49,7 @@ $('#categories-container').on('click', 'li', function () {
 });
 
 
-function updatePageHeader(element=null) {
+function updatePageHeader(element = null) {
     let $categoryNameHeader = $('#category-name');
 
     let slug;
@@ -60,41 +60,48 @@ function updatePageHeader(element=null) {
         slug = element.data('category-slug');
     }
 
-    getNameOfCategoryBySlug(slug, function (name) {
-        $categoryNameHeader.html(name);
-    })
-
+    let name = getNameOfCategoryBySlug(slug);
+    $categoryNameHeader.html(name);
 }
 
-function getNameOfCategoryBySlug(slug, callback){
+
+function getNameOfCategoryBySlug(slug) {
     let categoryUrl = $('#category-name').data('category-name-url');
     let name = 'Posts';
+
     if (slug) {
-        $.get(
-            categoryUrl, {'slug': slug}
-        ).done(function (response) {
-            if (response.name) {
-                callback(response.name);
+        $.ajax({
+            type: 'GET',
+            async: false,
+            url: categoryUrl,
+            data: {'slug': slug},
+            success: function (response) {
+                if (response.name) {
+                    name = response.name;
+                }
             }
         });
-    } else {
-        callback(name);
     }
+    return name;
 }
 
 
-function getIdOfCategoryBySlug(slug, callback){
+function getIdOfCategoryBySlug(slug) {
     let categoryUrl = $('#category-name').data('category-id-url');
-    let name = 'Posts';
+    let categoryId = 0;
+
     if (slug) {
-        $.get(
-            categoryUrl, {'slug': slug}
-        ).done(function (response) {
-            if (response.id) {
-                callback(response.id);
+        $.ajax({
+            type: 'GET',
+            async: false,
+            url: categoryUrl,
+            data: {'slug': slug},
+            success: function (response) {
+                if (response.id) {
+                    categoryId = response.id;
+                }
             }
         });
-    } else {
-        callback(name);
     }
+    return categoryId;
 }
