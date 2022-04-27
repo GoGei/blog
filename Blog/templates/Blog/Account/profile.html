@@ -1,5 +1,5 @@
 {% include 'Blog/base.html' %}
-{% load filters %}
+{% load filters static %}
 
 {% block body %}
     <div class="container bootstrap snippet">
@@ -17,20 +17,20 @@
                 {% url_get_field request 'tab' as activated %}
                 <ul class="nav nav-tabs">
                     <li class="nav-item "><a
-                            class="nav-link {% if activated == 'info' or not activated %}active{% endif %}"
-                            href="?{% url_replace request 'tab' 'info' %}">Info</a></li>
+                            class="nav-link {% if activated == 'posts' or activated == None %}active{% endif %}"
+                            href="?{% url_replace request 'tab' 'posts' %}">Info</a></li>
                     <li class="nav-item"><a
-                            class="nav-link {% if activated == 'edit' or not activated %}active{% endif %}"
+                            class="nav-link {% if activated == 'edit' %}active{% endif %}"
                             href="?{% url_replace request 'tab' 'edit' %}">Edit Profile</a>
                     </li>
                     <li class="nav-item"><a
-                            class="nav-link {% if activated == 'liked' or not activated %}active{% endif %}"
+                            class="nav-link {% if activated == 'liked' %}active{% endif %}"
                             href="?{% url_replace request 'tab' 'liked' %}">Liked Posts</a>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane {% if activated == 'info' or not activated %}active{% endif %}">
-                        {% include 'Blog/Account/profile_info_menu.html' %}
+                    <div class="tab-pane {% if activated == 'posts' or activated == None %}active{% endif %}">
+                        {% include 'Blog/Account/profile_posts_menu.html' %}
                     </div>
                     <div class="tab-pane {% if activated == 'edit' %}active{% endif %}">
                         {% include 'Blog/Account/profile_edit_menu.html' %}
@@ -39,9 +39,11 @@
                         {% include 'Blog/Account/profile_liked_menu.html' %}
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="{% static 'js/blog/account-profile-posts.js' %}"></script>
 {% endblock %}
