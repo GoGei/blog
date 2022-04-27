@@ -20,7 +20,7 @@ class PostViewSet(viewsets.ModelViewSet):
     }
 
     filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
-    search_fields = ['title', 'author__email']
+    search_fields = ['title', 'author__email', 'text']
     filterset_fields = ['category', 'author']
     ordering_fields = ['title']
 

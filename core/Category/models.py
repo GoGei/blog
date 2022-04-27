@@ -22,4 +22,4 @@ class Category(CrmMixin, SlugifyMixin):
     def short_name(self):
         name = self.name
         chars = self.CHARS_FOR_SHORT_NAME
-        return name if len(name) < chars else name[:chars-5] + '...'
+        return name if len(name) < chars else name[:chars - 5] + '...'

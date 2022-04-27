@@ -1,12 +1,18 @@
 import json
 
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
+from core.Post.models import Post
 
 
 def blog_index_view(request):
     return render(request, 'Blog/Home/index.html')
+
+
+def blog_post_view(request, post_slug):
+    post = get_object_or_404(Post, slug=post_slug)
+    return render(request, 'Blog/Home/view_post.html', {'post': post})
 
 
 def render_posts(request):
