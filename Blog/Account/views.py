@@ -1,8 +1,8 @@
-import json
-
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
+from django_hosts import reverse
+
 from .forms import PostForm
 
 
@@ -11,9 +11,14 @@ def account_profile(request):
 
 
 def render_post_form(request):
-    # data = json.loads(request.GET.get('posts'))
-    form = PostForm(request.GET or None)
+    form_body = PostForm(request.GET or None)
+    form = {
+        'title': 'Add post',
+        'body': form_body,
+        'action_url': reverse('api:posts-list', host='api'),
+        'buttons': {'save': True, 'cancel': True}
+    }
     content = render_to_string(
-        'Blog/Home/blog_posts_render.html',
+        'Blog/Account/profile_post_form.html',
         {'form': form})
-    return JsonResponse({'content': content})
+    return JsonResponse({'form': content})

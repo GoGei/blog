@@ -46,9 +46,11 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_hosts',
     'django_filters',
+    'widget_tweaks',
     'rest_framework',
     'drf_yasg2',
     'corsheaders',
+    'ckeditor',
     'ckeditor_uploader',
     'scripts',
     'core.Utils',
@@ -182,12 +184,15 @@ REST_FRAMEWORK = {
 }
 
 
+CKEDITOR_UPLOAD_PATH = os.path.join(BASE_DIR, 'media/ckeditoruploads/')
+
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
     },
-    'blog-post': {
-        'toolbar': [
+    'profile': {
+        'toolbar': 'profile',
+        'toolbar_profile': [
             ['Bold', 'Italic', 'Underline'],
             ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter',
              'JustifyRight', 'JustifyBlock'],

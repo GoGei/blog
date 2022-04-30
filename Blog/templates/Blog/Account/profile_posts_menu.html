@@ -1,5 +1,5 @@
-<h2>Info</h2>
-<a type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#profileAddModal">Add post</a>
+<h2>Posts</h2>
+<a type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#profileAddModal" >Add post</a>
 <hr>
 
 <div id="account-posts">
@@ -13,19 +13,11 @@
     {% endfor %}
 </div>
 
-<div class="modal fade" id="profileAddModal" tabindex="-1" role="dialog" aria-labelledby="profileAddModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="profileAddModal" tabindex="-1" role="dialog" aria-hidden="true"
+    data-form-url="{% url 'blog-profile-post-form' %}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Content
-            </div>
+
         </div>
     </div>
 </div>

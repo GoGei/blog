@@ -16,8 +16,12 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required
+from ckeditor_uploader.views import upload
 
 urlpatterns = [
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    url(r'^ckeditor/upload/', login_required(upload), name='ckeditor_upload'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
