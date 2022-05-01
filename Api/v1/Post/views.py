@@ -69,7 +69,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
     def _get_modified_request_data(self, request):
         data = request.data.copy()
-        data['author'] = request.user
+        data['author'] = request.user.id
         return data
 
     @action(detail=True, methods=['get', 'post'], permission_classes=[IsAuthenticated])
