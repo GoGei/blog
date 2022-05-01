@@ -1,5 +1,4 @@
-from django.db.models import BooleanField
-from django.db.models.expressions import RawSQL, Case
+from django.db.models.expressions import RawSQL
 from rest_framework import generics, viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
