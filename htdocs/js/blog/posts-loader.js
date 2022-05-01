@@ -61,7 +61,7 @@ function loadPosts(requestUrl='', clearContainer=false) {
 
 
 function getData() {
-	let data = {};
+	let data = {'limit': 10};
 
 	let url = new URL(document.location.href);
 	if (url.searchParams.has('category')) {
