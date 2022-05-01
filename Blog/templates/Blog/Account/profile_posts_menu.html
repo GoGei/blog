@@ -1,16 +1,12 @@
+{% load hosts %}
+
 <h2>Posts</h2>
 <a type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#profileAddModal" >Add post</a>
 <hr>
 
-<div id="account-posts">
-    {% for x in '123456'|make_list %}
-        <div class="blog-post">
-            <h2 class="blog-post-title">Title</h2>
-            <p>Text of the post</p>
-            <button type="button" class="btn btn-outline-secondary">Edit post</button>
-            <button type="button" class="btn btn-outline-secondary">View post</button>
-        </div>
-    {% endfor %}
+<div id="account-posts" data-posts-next-url=""
+     data-account-posts-url="{% host_url 'api:profile-posts' host 'api' %}"
+     data-account-posts-render-url="{% url 'blog-profile-posts' %}">
 </div>
 
 <div class="modal fade" id="profileAddModal" tabindex="-1" role="dialog" aria-hidden="true"

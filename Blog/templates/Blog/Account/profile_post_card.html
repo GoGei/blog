@@ -1,6 +1,7 @@
 <div class="blog-post">
-    <h2 class="blog-post-title">Title</h2>
-    <p>Text of the post</p>
-    <a type="button" class="btn btn-outline-secondary" href="">Edit post</a>
-    <a type="button" class="btn btn-outline-secondary" href="">View post</a>
+    <h2 class="blog-post-title">{{ post.title }}</h2>
+    {{ post.text|safe|escape }}
+    <a type="button" class="btn btn-outline-secondary" data-post-id="{{ post.id }}">Edit post</a>
+    <a type="button" class="btn btn-outline-secondary" data-post-id="{{ post.id }}">Delete post</a>
+    <a type="button" class="btn btn-outline-secondary" data-post-id="{{ post.id }}">View post</a>
 </div>

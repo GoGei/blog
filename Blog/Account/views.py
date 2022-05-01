@@ -1,3 +1,4 @@
+import json
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -22,3 +23,14 @@ def render_post_form(request):
         'Blog/Account/profile_post_form.html',
         {'form': form})
     return JsonResponse({'form': content})
+
+
+def render_posts(request):
+    posts = request.GET.get('posts', {})
+    data = {}
+    if posts:
+        data = json.loads(posts)
+    content = render_to_string(
+        'Blog/Account/profile_posts.html',
+        {'posts': data})
+    return JsonResponse({'content': content})
