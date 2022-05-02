@@ -1,7 +1,12 @@
+{% load hosts %}
+
 <div class="blog-post">
     <h2 class="blog-post-title">{{ post.title }}</h2>
     {{ post.text|safe|escape }}
-    <a type="button" class="btn btn-outline-secondary" data-post-id="{{ post.id }}">Edit post</a>
-    <a type="button" class="btn btn-outline-secondary" data-post-id="{{ post.id }}">Delete post</a>
-    <a type="button" class="btn btn-outline-secondary" data-post-id="{{ post.id }}">View post</a>
+    <div>
+        <a type="button" class="btn btn-outline-secondary" data-post-id="{{ post.id }}"
+            data-toggle="modal" data-target="#profileEditModal">Edit post</a>
+        <a type="button" class="btn btn-outline-secondary delete-post" data-post-delete-url="{% host_url 'api:posts-detail' post.id host 'api' %}">Delete post</a>
+        <a type="button" class="btn btn-outline-secondary" href="{% url 'blog-profile-post-view' post.slug %}">View post</a>
+    </div>
 </div>

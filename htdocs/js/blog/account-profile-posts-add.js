@@ -31,7 +31,6 @@ AddPostModalForm = {};
             e.preventDefault();
             let $form = $(obj.modal.find('form'));
             let formData = $form.serialize();
-            console.log(formData);
             $.ajax({
                 type: $form.attr('method'),
                 url: $form.attr('action'),

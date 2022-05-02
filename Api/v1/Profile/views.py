@@ -25,7 +25,10 @@ class ProfilePostsView(viewsets.ReadOnlyModelViewSet):
     serializer_class = PostListSerializer
 
     def get_queryset(self):
-        return self.request.user.post_set.all()
+        user = self.request.user
+        if user and user.is_authenticated:
+            return user.post_set.all()
+        return Post.objects.none()
 
     def list(self, request, *args, **kwargs):
         user = request.user

@@ -4,3 +4,7 @@ $(".go-to-the-top").click(function () {
         behavior: 'smooth'
     });
 });
+
+$.ajaxSetup({
+    headers: {"X-CSRFToken": $.cookie('csrftoken')}
+});

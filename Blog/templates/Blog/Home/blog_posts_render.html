@@ -1,3 +1,5 @@
 {% for post in posts %}
     {% include 'Blog/Home/blog_post_card.html' with post=post %}
+{% empty %}
+    Be the first one who created first post
 {% endfor %}
