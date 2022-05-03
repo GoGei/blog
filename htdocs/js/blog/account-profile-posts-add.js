@@ -36,7 +36,7 @@ AddPostModalForm = {};
                 url: $form.attr('action'),
                 data: formData,
                 success: function (response) {
-                    console.log(response);
+                    addPost(response.id);
                     $form[0].reset();
                     closeModal();
                 },
@@ -71,6 +71,16 @@ AddPostModalForm = {};
         $cancelButton.on('click', function (e){
             e.preventDefault();
             closeModal();
+        })
+    }
+
+    function addPost(objId){
+        $.ajax({
+            url: obj.modal.data('render-post-url'),
+            data: {'post_id': objId},
+            success: function (response){
+                $('#account-posts').prepend(response.content);
+            }
         })
     }
 

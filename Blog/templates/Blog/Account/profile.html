@@ -27,13 +27,13 @@
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane {% if activated == 'posts' or activated == None %}active{% endif %}">
-                        {% include 'Blog/Account/profile_posts_menu.html' %}
+                        {% include 'Blog/Account/profile_menu_posts.html' %}
                     </div>
                     <div class="tab-pane {% if activated == 'edit' %}active{% endif %}">
-                        {% include 'Blog/Account/profile_edit_menu.html' %}
+                        {% include 'Blog/Account/profile_menu_edit.html' %}
                     </div>
                     <div class="tab-pane {% if activated == 'liked' %}active{% endif %}">
-                        {% include 'Blog/Account/profile_liked_menu.html' %}
+                        {% include 'Blog/Account/profile_menu_liked.html' %}
                     </div>
                 </div>
             </div>

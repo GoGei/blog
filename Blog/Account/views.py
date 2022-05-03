@@ -14,19 +14,31 @@ def account_profile(request):
     return render(request, 'Blog/Account/profile.html')
 
 
-def render_post_form(request):
-    initial_post_id = request.GET.get('post', None)
-    initial_post = get_object_or_404(Post, pk=initial_post_id)
-    initial = model_to_dict(initial_post)
-    post_form = PostForm
-    if initial_post:
-        form_body = post_form(initial=initial)
-    else:
-        form_body = post_form()
+def render_post_add_form(request):
+    form_body = PostForm()
     form = {
         'title': 'Add post',
         'body': form_body,
+        'method': 'POST',
         'action_url': reverse('api:posts-list', host='api'),
+        'buttons': {'save': True, 'cancel': True}
+    }
+    content = render_to_string(
+        'Blog/Account/profile_post_form.html',
+        {'form': form})
+    return JsonResponse({'form': content})
+
+
+def render_post_edit_form(request):
+    initial_post_id = request.GET.get('post')
+    initial_post = get_object_or_404(Post, pk=initial_post_id)
+    initial = model_to_dict(initial_post)
+    form_body = PostForm(initial=initial)
+    form = {
+        'title': 'Edit post',
+        'body': form_body,
+        'method': 'PUT',
+        'action_url': reverse('api:posts-detail', args=[initial_post_id], host='api'),
         'buttons': {'save': True, 'cancel': True}
     }
     content = render_to_string(
@@ -43,6 +55,24 @@ def render_posts(request):
     content = render_to_string(
         'Blog/Account/profile_posts.html',
         {'posts': data})
+    return JsonResponse({'content': content})
+
+
+def render_post_delete(request):
+    post_id = request.GET.get('post', None)
+    post = get_object_or_404(Post, pk=post_id)
+    content = render_to_string(
+        'Blog/Account/profile_post_delete_modal.html',
+        {'post': post})
+    return JsonResponse({'content': content})
+
+
+def render_post(request):
+    post_id = request.GET.get('post_id', None)
+    post = get_object_or_404(Post, pk=post_id)
+    content = render_to_string(
+        'Blog/Account/profile_post_card.html',
+        {'post': post})
     return JsonResponse({'content': content})
 
 

@@ -1,12 +1,14 @@
-{% load hosts %}
-
-<div class="blog-post">
+<div class="blog-post" id="post-id-{{ post.id }}">
     <h2 class="blog-post-title">{{ post.title }}</h2>
+    <h4>{{ post.category.name|truncatechars:30 }}</h4>
+    <p class="blog-post-meta">Created {{ post.created_date }}</p>
     {{ post.text|safe|escape }}
     <div>
-        <a type="button" class="btn btn-outline-secondary" data-post-id="{{ post.id }}"
-            data-toggle="modal" data-target="#profileEditModal">Edit post</a>
-        <a type="button" class="btn btn-outline-secondary delete-post" data-post-delete-url="{% host_url 'api:posts-detail' post.id host 'api' %}">Delete post</a>
-        <a type="button" class="btn btn-outline-secondary" href="{% url 'profile-post-view' post.slug %}">View post</a>
+        <a type="button" class="btn btn-outline-secondary edit-post"
+           data-post-id="{{ post.id }}">Edit post</a>
+        <a type="button" class="btn btn-outline-secondary delete-post"
+           data-post-id="{{ post.id }}">Delete post</a>
+        <a type="button" class="btn btn-outline-secondary" href="{% url 'profile-post-view' post.slug %}">View
+            post</a>
     </div>
 </div>

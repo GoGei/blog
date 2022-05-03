@@ -23,7 +23,7 @@ class PostListSerializer(serializers.ModelSerializer):
 class PostCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ['author', 'category', 'title', 'text']
+        fields = ['id', 'author', 'category', 'title', 'text', 'slug']
 
     def create(self, validated_data):
         instance = super().create(validated_data)

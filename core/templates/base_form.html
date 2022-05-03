@@ -1,4 +1,4 @@
-<form action="{{ form.action_url }}" method="post" novalidate>
+<form action="{{ form.action_url }}" method="{{ form.method|default:'post' }}" novalidate>
     {% csrf_token %}
     {% include 'base_non_field_error_block.html' with form=form.body %}
     {{ form.body.media }}

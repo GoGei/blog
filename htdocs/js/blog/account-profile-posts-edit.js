@@ -14,7 +14,7 @@ EditPostModalForm = {};
         $.ajax({
             url: obj.modal.data('form-url'),
             async: false,
-            data: {'post': 5074},
+            data: {'post': obj.postId},
             success: function (response) {
                 let form = response.form;
                 let $modalBody = obj.modal.find('.modal-content');
@@ -32,13 +32,12 @@ EditPostModalForm = {};
             e.preventDefault();
             let $form = $(obj.modal.find('form'));
             let formData = $form.serialize();
-            console.log(formData);
             $.ajax({
                 type: $form.attr('method'),
                 url: $form.attr('action'),
                 data: formData,
                 success: function (response) {
-                    console.log(response);
+                    rerenderPost(response.id)
                     $form[0].reset();
                     closeModal();
                 },
@@ -70,16 +69,27 @@ EditPostModalForm = {};
             });
         });
 
-        $cancelButton.on('click', function (e){
+        $cancelButton.on('click', function (e) {
             e.preventDefault();
             closeModal();
         })
     }
 
-    function init(){
+    function rerenderPost(objId){
+        $.ajax({
+            url: obj.modal.data('render-post-url'),
+            data: {'post_id': objId},
+            success: function (response){
+                $(`#post-id-${objId}`).replaceWith(response.content);
+            }
+        })
+    }
+
+    function init(postId){
         console.log('Load edit post modal');
         let $modal = $('#profileEditModal');
         obj.modal = $modal;
+        obj.postId = postId;
         $modal.on('hidden.bs.modal', function () {
             clearModal();
         });
@@ -89,12 +99,15 @@ EditPostModalForm = {};
         $modal.on('show.bs.modal', function () {
             loadModal();
         });
+        return $modal;
     }
 
     obj.init = init;
 })(EditPostModalForm, $);
 
 
-$(document).ready(function () {
-    EditPostModalForm.init();
-});
+$(document).on('click', '.edit-post', function (){
+    let postId = $(this).data('post-id');
+    let $modal = EditPostModalForm.init(postId);
+    $modal.modal('show');
+})

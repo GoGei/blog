@@ -52,7 +52,8 @@ class ProfileLikedView(viewsets.ReadOnlyModelViewSet):
     queryset = PostLike.objects.select_related('post', 'user').filter(is_liked=True)
 
     def list(self, request, *args, **kwargs):
-        user = request.user
+        # user = request.user
+        user = USER
         liked_posts = self.get_queryset().filter(user=user).values_list('post_id', flat=True)
         queryset = Post.objects.select_related('author').filter(id__in=liked_posts).ordered()
 
