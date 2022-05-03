@@ -10,22 +10,7 @@
     </label>
 
     <div class="{% if inline_form %}col-sm-10{% endif %}">
-        {% with field.field.widget.attrs.class as field_class %}
-            {% if field.field.widget == 'DateInput' %}
-                <div class="input-group date">
-                    {% if field_class %}
-                        {% render_field field class=field_class %}
-                    {% else %}
-                        {% render_field field class="form-control" %}
-                    {% endif %}
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                </div>
-            {% elif field_class %}
-                {% render_field field class=field_class %}
-            {% else %}
-                {% render_field field class="form-control" %}
-            {% endif %}
-        {% endwith %}
+        {% include 'base_form_render_field.html' %}
     </div>
 
     {% include 'base_field_error_block.html' %}

@@ -1,11 +1,13 @@
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt
 from django_hosts import reverse
 from django_hosts.resolvers import reverse as reverse_host
 
-from .forms import LoginForm
+from .forms import LoginForm, RegistrationForm
 
 
 def login_view(request):
@@ -33,9 +35,35 @@ def login_view(request):
             else:
                 form.add_error(None, 'This account is not active')
         else:
-            form.add_error(None, 'Account with this credentials does not exists')
+            form.add_error(None, 'Please, enter correct email and password')
 
     return render(request, 'Blog/Login/login.html', {'form': form})
+
+
+@csrf_exempt
+def register_user(request):
+    form = RegistrationForm(request.POST or None)
+
+    if request.POST and request.is_ajax():
+        if form.is_valid():
+            user = form.save()
+            login(request, user=user)
+            rc = {
+                'redirect_url': reverse('blog-index'),
+                'success': True,
+            }
+        else:
+            rc = {
+                'errors': form.errors,
+                'success': False,
+            }
+        return JsonResponse(rc)
+
+    content = render_to_string('Blog/Login/register_form.html',
+                               {'form': form,
+                                'action': reverse('blog-register')},
+                               request=request)
+    return JsonResponse({'form': content})
 
 
 @login_required

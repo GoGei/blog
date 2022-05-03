@@ -18,13 +18,7 @@
     <img class="mb-4" src="{% static 'images/brand_image.png' %}" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
-    {% if form.non_field_errors %}
-        <div class="form-group alert alert-warning">
-        {% for error in form.non_field_errors %}
-            {{ error }}
-        {% endfor %}
-        </div>
-    {% endif %}
+    {% include 'Blog/Login/login_non_form_error_block.html' %}
 
     {% with form.email as field %}
         {% render_field field class="form-control" %}
@@ -49,11 +43,14 @@
     <p class="text-center">Don't have an account? <a href="" data-toggle="modal" data-target="#registrationModal">Sign Up</a></p>
 </form>
 
+{% include 'Blog/Login/register_modal.html' %}
 
 <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/jquery.inputmask.min.js' %}"></script>
 
-{% include 'Blog/Login/register_modal.html' %}
+<script src="{% static 'js/blog/scripts.js' %}"></script>
+<script src="{% static 'js/blog/registration.js' %}"></script>
 
 </body>
 </html>

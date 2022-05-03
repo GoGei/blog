@@ -29,3 +29,5 @@ $(".go-to-the-top").click(function () {
         behavior: 'smooth'
     });
 });
+
+$(".phone-number").inputmask("mask", { "mask": "+380(99)-999-9999" });

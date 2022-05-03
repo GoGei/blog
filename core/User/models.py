@@ -34,9 +34,11 @@ class UserManager(BaseUserManager):
 
 
 class User(CrmMixin, AbstractBaseUser):
+    first_name = models.CharField(max_length=50, null=True)
+    last_name = models.CharField(max_length=50, null=True)
     email = models.EmailField(max_length=255, unique=True, db_index=True, null=True)
+    phone = models.CharField(max_length=50, unique=True, db_index=True, null=True)
     # username = models.CharField(max_length=255, unique=True, db_index=True, null=True)
-    # phone = models.CharField(max_length=50, unique=True, db_index=True, null=True)
     # photo = models.ImageField(null=True)
 
     is_active = models.BooleanField(default=True)
@@ -53,6 +55,10 @@ class User(CrmMixin, AbstractBaseUser):
 
     def __str__(self):
         return self.label
+
+    @property
+    def full_name(self):
+        return ' '.join([self.first_name, self.last_name]) or self.label
 
     @property
     def label(self):
