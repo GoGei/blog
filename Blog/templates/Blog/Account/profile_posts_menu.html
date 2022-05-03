@@ -6,11 +6,11 @@
 
 <div id="account-posts" data-posts-next-url=""
      data-account-posts-url="{% host_url 'api:profile-posts-list' host 'api' %}"
-     data-account-posts-render-url="{% url 'blog-profile-posts' %}">
+     data-account-posts-render-url="{% url 'profile-posts' %}">
 </div>
 
 <div class="modal fade" id="profileAddModal" tabindex="-1" role="dialog" aria-hidden="true"
-    data-form-url="{% url 'blog-profile-post-form' %}">
+    data-form-url="{% url 'profile-post-form' %}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -20,7 +20,7 @@
 
 
 <div class="modal fade" id="profileEditModal" tabindex="-1" role="dialog" aria-hidden="true"
-    data-form-url="{% url 'blog-profile-post-form' %}">
+    data-form-url="{% url 'profile-post-form' %}">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 

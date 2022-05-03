@@ -7,6 +7,6 @@
         <a type="button" class="btn btn-outline-secondary" data-post-id="{{ post.id }}"
             data-toggle="modal" data-target="#profileEditModal">Edit post</a>
         <a type="button" class="btn btn-outline-secondary delete-post" data-post-delete-url="{% host_url 'api:posts-detail' post.id host 'api' %}">Delete post</a>
-        <a type="button" class="btn btn-outline-secondary" href="{% url 'blog-profile-post-view' post.slug %}">View post</a>
+        <a type="button" class="btn btn-outline-secondary" href="{% url 'profile-post-view' post.slug %}">View post</a>
     </div>
 </div>

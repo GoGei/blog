@@ -3,8 +3,8 @@ from Blog.Account import views
 
 
 urlpatterns = [
-    url('$', views.account_profile, name='blog-profile'),
-    url('posts/$', views.render_posts, name='blog-profile-posts'),
-    url('post-form/$', views.render_post_form, name='blog-profile-post-form'),
-    url('post/(?P<post_slug>[\w\W\-]+)/$', views.blog_profile_post_view, name='blog-profile-post-view'),
+    url('$', views.account_profile, name='profile'),
+    url('posts/$', views.render_posts, name='profile-posts'),
+    url('post-form/$', views.render_post_form, name='profile-post-form'),
+    url('post/(?P<post_slug>[\w\W\-]+)/$', views.blog_profile_post_view, name='profile-post-view'),
 ]
