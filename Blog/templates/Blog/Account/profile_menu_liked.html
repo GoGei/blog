@@ -1,7 +1,9 @@
+{% load hosts %}
 <h2>Liked</h2>
 <hr>
 
-{#{% for x in '123456'|make_list %}#}
-{#    {% include 'Blog/Home/blog_post_card.html' with post=post %}#}
-{#{% endfor %}#}
+<div id="account-liked-posts" data-posts-next-url=""
+     data-account-posts-url="{% host_url 'api:profile-posts-liked-list' host 'api' %}"
+     data-account-posts-render-url="{% url 'profile-liked-posts' %}">
+</div>
 

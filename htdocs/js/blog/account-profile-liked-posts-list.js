@@ -1,23 +1,23 @@
-AccountLoadPosts = {};
+AccountLoadLikedPosts = {};
 (function (obj, $) {
 
     $(window).on("scroll", function () {
         let scrollHeight = $(document).height();
         let scrollPosition = $(window).height() + $(window).scrollTop();
         if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
-            let nextPostsUrl = $('#account-posts').data('posts-next-url');
+            let nextPostsUrl = $('#account-liked-posts').data('posts-next-url');
             loadPosts(nextPostsUrl, false);
         }
     });
 
     function loadPosts(requestUrl = '', allowedGetFromBaseUrl = true) {
-        let container = $('#account-posts');
+        let container = $('#account-liked-posts');
         if ((!requestUrl) && (allowedGetFromBaseUrl)) {
             requestUrl = container.data('account-posts-url')
         }
 
         if (requestUrl) {
-            console.log('Load posts account');
+            console.log('Load liked posts account');
             $.ajax({
                 type: 'GET',
                 url: requestUrl,
@@ -45,8 +45,8 @@ AccountLoadPosts = {};
 
     obj.init = init;
 
-})(AccountLoadPosts, $)
+})(AccountLoadLikedPosts, $)
 
 $(document).ready(function () {
-    AccountLoadPosts.init();
+    AccountLoadLikedPosts.init();
 });

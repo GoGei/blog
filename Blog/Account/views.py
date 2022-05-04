@@ -14,6 +14,11 @@ def account_profile(request):
     return render(request, 'Blog/Account/profile.html')
 
 
+def blog_profile_post_view(request, post_slug):
+    post = get_object_or_404(Post, slug=post_slug)
+    return render(request, 'Blog/Account/profile_post_view.html', {'post': post})
+
+
 def render_post_add_form(request):
     form_body = PostForm()
     form = {
@@ -58,6 +63,17 @@ def render_posts(request):
     return JsonResponse({'content': content})
 
 
+def render_posts_liked(request):
+    posts = request.GET.get('posts', {})
+    data = {}
+    if posts:
+        data = json.loads(posts)
+    content = render_to_string(
+        'Blog/Account/profile_posts_liked.html',
+        {'posts': data})
+    return JsonResponse({'content': content})
+
+
 def render_post_delete(request):
     post_id = request.GET.get('post', None)
     post = get_object_or_404(Post, pk=post_id)
@@ -90,8 +106,3 @@ def render_profile_form(request):
         'Blog/Account/profile_edit_profile_form.html',
         {'form': form})
     return JsonResponse({'content': content})
-
-
-def blog_profile_post_view(request, post_slug):
-    post = get_object_or_404(Post, slug=post_slug)
-    return render(request, 'Blog/Account/profile_post_view.html', {'post': post})

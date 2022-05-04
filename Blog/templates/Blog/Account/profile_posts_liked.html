@@ -1,0 +1,14 @@
+{% for post in posts %}
+    <div class="blog-post" id="post-id-{{ post.id }}">
+        <h2 class="blog-post-title">{{ post.title }}</h2>
+        <h4>{{ post.category.name|truncatechars:30 }}</h4>
+        <p class="blog-post-meta">Created {{ post.created_date }}</p>
+        {{ post.text|safe|escape }}
+        <div>
+            <a type="button" class="btn btn-outline-secondary" href="{% url 'profile-post-view' post.slug %}">View
+                post</a>
+        </div>
+    </div>
+{% empty %}
+    No posts
+{% endfor %}

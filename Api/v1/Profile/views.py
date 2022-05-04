@@ -1,7 +1,6 @@
 from django.db.models.expressions import RawSQL
 from rest_framework import generics, viewsets
-# from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import AllowAny
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 from .serializers import ProfileSerializer, ProfileUpdateSerializer
@@ -11,13 +10,7 @@ from core.Post.models import Post
 from core.Likes.models import PostLike
 
 
-# TODO remove user
-USER = User.objects.get(pk=59)
-
-
 class ProfileView(generics.RetrieveUpdateAPIView):
-    permission_classes = [AllowAny]
-
     serializer_class = ProfileSerializer
     serializer_map = {
         'get': ProfileSerializer,
@@ -32,9 +25,8 @@ class ProfileView(generics.RetrieveUpdateAPIView):
         return serializer
 
     def get_object(self):
-        # queryset = self.get_queryset()
-        # obj = get_object_or_404(queryset, pk=self.request.user.pk)
-        obj = USER
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset, pk=self.request.user.pk)
         return obj
 
     def update(self, request, *args, **kwargs):
@@ -89,8 +81,7 @@ class ProfileLikedView(viewsets.ReadOnlyModelViewSet):
     queryset = PostLike.objects.select_related('post', 'user').filter(is_liked=True)
 
     def list(self, request, *args, **kwargs):
-        # user = request.user
-        user = USER
+        user = request.user
         liked_posts = self.get_queryset().filter(user=user).values_list('post_id', flat=True)
         queryset = Post.objects.select_related('author').filter(id__in=liked_posts).ordered()
 
