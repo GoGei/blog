@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import PostSerializer, PostCreateUpdateSerializer, PostListSerializer
+from Api.v1.Comment.serializers import CommentCreateUpdateSerializer
 from core.Post.models import Post
 from core.Likes.models import PostLike
 
@@ -17,6 +18,7 @@ class PostViewSet(viewsets.ModelViewSet):
         'create': PostCreateUpdateSerializer,
         'update': PostCreateUpdateSerializer,
         'list': PostListSerializer,
+        'comment': CommentCreateUpdateSerializer,
     }
 
     filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
@@ -95,3 +97,18 @@ class PostViewSet(viewsets.ModelViewSet):
         obj, _ = PostLike.objects.get_or_create(post=post, user=user)
         obj.deactivate()
         return Response(status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+    def comment(self, request, pk=None):
+        post = self.get_object()
+        user = request.user
+        text = self.request.data.get('text', None)
+        data = {
+            'author': user.id,
+            'post': post.id,
+            'text': text,
+        }
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        return Response(serializer.data)

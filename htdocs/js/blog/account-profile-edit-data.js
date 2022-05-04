@@ -78,7 +78,7 @@ AccountEditProfile = {};
 
     function init() {
         console.log('Load edit profile');
-        obj.container = $('#profile-data-container');
+        obj.container = $('#profile-edit-data-container');
         initContainer();
     }
 

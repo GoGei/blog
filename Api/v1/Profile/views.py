@@ -40,7 +40,7 @@ class ProfileView(generics.RetrieveUpdateAPIView):
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        context = {'instance': instance}
+        context = self.get_context()
         serializer = self.get_serializer(instance, data=request.data, partial=partial, context=context)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
@@ -51,6 +51,11 @@ class ProfileView(generics.RetrieveUpdateAPIView):
             instance._prefetched_objects_cache = {}
 
         return Response(serializer.data)
+
+    def get_context(self):
+        instance = self.get_object()
+        context = {'instance': instance}
+        return context
 
 
 class ProfilePostsView(viewsets.ReadOnlyModelViewSet):
