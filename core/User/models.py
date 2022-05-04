@@ -60,7 +60,7 @@ class User(CrmMixin, AbstractBaseUser):
     def full_name(self):
         if self.first_name and self.last_name:
             return ' '.join([self.first_name, self.last_name])
-        return  self.label
+        return self.label
 
     @property
     def label(self):
