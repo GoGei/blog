@@ -58,7 +58,9 @@ class User(CrmMixin, AbstractBaseUser):
 
     @property
     def full_name(self):
-        return ' '.join([self.first_name, self.last_name]) or self.label
+        if self.first_name and self.last_name:
+            return ' '.join([self.first_name, self.last_name])
+        return  self.label
 
     @property
     def label(self):

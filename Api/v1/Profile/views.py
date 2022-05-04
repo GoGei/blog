@@ -1,24 +1,56 @@
 from django.db.models.expressions import RawSQL
 from rest_framework import generics, viewsets
-from rest_framework.generics import get_object_or_404
+# from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .serializers import ProfileSerializer
+from .serializers import ProfileSerializer, ProfileUpdateSerializer
 from Api.v1.Post.serializers import PostListSerializer
 from core.User.models import User
 from core.Post.models import Post
 from core.Likes.models import PostLike
 
 
+# TODO remove user
+USER = User.objects.get(pk=59)
+
+
 class ProfileView(generics.RetrieveUpdateAPIView):
+    permission_classes = [AllowAny]
+
     serializer_class = ProfileSerializer
-    posts_serializer_class = PostListSerializer
+    serializer_map = {
+        'get': ProfileSerializer,
+        'put': ProfileUpdateSerializer,
+        'patch': ProfileUpdateSerializer,
+    }
     queryset = User.objects.prefetch_related('post_set').all()
 
+    def get_serializer_class(self):
+        method = self.request.method.lower()
+        serializer = self.serializer_map.get(method, self.serializer_class)
+        return serializer
+
     def get_object(self):
-        queryset = self.get_queryset()
-        obj = get_object_or_404(queryset, pk=self.request.user.pk)
+        # queryset = self.get_queryset()
+        # obj = get_object_or_404(queryset, pk=self.request.user.pk)
+        obj = USER
         return obj
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        context = {'instance': instance}
+        serializer = self.get_serializer(instance, data=request.data, partial=partial, context=context)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            # If 'prefetch_related' has been applied to a queryset, we need to
+            # forcibly invalidate the prefetch cache on the instance.
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
 
 
 class ProfilePostsView(viewsets.ReadOnlyModelViewSet):

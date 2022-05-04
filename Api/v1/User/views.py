@@ -19,7 +19,7 @@ class UserViewSet(viewsets.ModelViewSet):
     }
 
     filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
-    search_fields = ['email']
+    search_fields = ['email', 'phone']
     filterset_fields = ['is_active', 'is_staff', 'is_superuser']
     ordering_fields = ['email']
 

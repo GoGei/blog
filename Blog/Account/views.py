@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django_hosts import reverse
 
 from core.Post.models import Post
-from .forms import PostForm
+from .forms import PostForm, ProfileForm
 
 
 def account_profile(request):
@@ -73,6 +73,22 @@ def render_post(request):
     content = render_to_string(
         'Blog/Account/profile_post_card.html',
         {'post': post})
+    return JsonResponse({'content': content})
+
+
+def render_profile_form(request):
+    user = request.user
+    initial = model_to_dict(user)
+    form_body = ProfileForm(initial=initial)
+    form = {
+        'body': form_body,
+        'method': 'PUT',
+        'action_url': reverse('api:profile', host='api'),
+    }
+
+    content = render_to_string(
+        'Blog/Account/profile_edit_profile_form.html',
+        {'form': form})
     return JsonResponse({'content': content})
 
 

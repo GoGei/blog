@@ -5,13 +5,14 @@ from core.User.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'label', 'is_active', 'is_staff', 'is_superuser']
+        fields = ['id', 'email', 'first_name', 'last_name', 'phone', 'label', 'full_name', 'is_active', 'is_staff',
+                  'is_superuser']
 
 
 class UserCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['email', 'is_active', 'is_staff', 'is_superuser']
+        fields = ['email', 'first_name', 'last_name', 'phone', 'is_active', 'is_staff', 'is_superuser']
 
 
 class PasswordSerializer(serializers.Serializer):
