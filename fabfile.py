@@ -87,3 +87,9 @@ def create_graph_models(*args):
     with cd(PROJECT_ROOT):
         local('mkdir -p graphs')
         local(f'./manage.py graph_models -a {models} -o {dot_file_name}')
+
+
+@task
+def fill_test_db():
+    with cd(PROJECT_ROOT):
+        local(f'./manage.py fill_db_with_test_data -c True -uc 5 -cc 5 -pc 5 -mc 2 -plc 3 -clc 5')

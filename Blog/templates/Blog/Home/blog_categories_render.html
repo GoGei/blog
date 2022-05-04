@@ -7,4 +7,6 @@
         data-category-slug="{{ category.slug }}">
 {#        <a href="?{% url_replace request 'category' category.slug %}">{{ category.name|truncatechars:30 }}</a></li>#}
         <a href="">{{ category.name|truncatechars:30 }}</a></li>
+{% empty %}
+    No categories created
 {% endfor %}
