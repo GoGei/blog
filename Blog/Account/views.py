@@ -4,21 +4,25 @@ from django.forms import model_to_dict
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
 from django_hosts import reverse
 
 from core.Post.models import Post
 from .forms import PostForm, ProfileForm
 
 
+@login_required
 def account_profile(request):
     return render(request, 'Blog/Account/profile.html')
 
 
+@login_required
 def blog_profile_post_view(request, post_slug):
     post = get_object_or_404(Post, slug=post_slug)
     return render(request, 'Blog/Account/profile_post_view.html', {'post': post})
 
 
+@login_required
 def render_post_add_form(request):
     form_body = PostForm()
     form = {
@@ -34,6 +38,7 @@ def render_post_add_form(request):
     return JsonResponse({'form': content})
 
 
+@login_required
 def render_post_edit_form(request):
     initial_post_id = request.GET.get('post')
     initial_post = get_object_or_404(Post, pk=initial_post_id)
@@ -52,6 +57,7 @@ def render_post_edit_form(request):
     return JsonResponse({'form': content})
 
 
+@login_required
 def render_posts(request):
     posts = request.GET.get('posts', {})
     data = {}
@@ -63,6 +69,7 @@ def render_posts(request):
     return JsonResponse({'content': content})
 
 
+@login_required
 def render_posts_liked(request):
     posts = request.GET.get('posts', {})
     data = {}
@@ -74,6 +81,7 @@ def render_posts_liked(request):
     return JsonResponse({'content': content})
 
 
+@login_required
 def render_post_delete(request):
     post_id = request.GET.get('post', None)
     post = get_object_or_404(Post, pk=post_id)
@@ -83,6 +91,7 @@ def render_post_delete(request):
     return JsonResponse({'content': content})
 
 
+@login_required
 def render_post(request):
     post_id = request.GET.get('post_id', None)
     post = get_object_or_404(Post, pk=post_id)
@@ -92,6 +101,7 @@ def render_post(request):
     return JsonResponse({'content': content})
 
 
+@login_required
 def render_profile_form(request):
     user = request.user
     initial = model_to_dict(user)

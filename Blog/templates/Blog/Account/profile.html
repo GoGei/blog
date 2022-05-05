@@ -7,6 +7,7 @@
             <div class="col-sm-3">
                 <ul class="list-group" id="profile-data-container" data-profile-data-url="{% host_url 'api:profile' host 'api' %}">
                     <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+                    !{{ user.email }}!
                 </ul>
             </div>
             <div class="col-sm-9">
@@ -41,13 +42,13 @@
 {% endblock %}
 
 {% block extrajs %}
-    <script src="{% static 'js/blog/account-profile-get-data.js' %}"></script>
-    <script src="{% static 'js/blog/account-profile-edit-data.js' %}"></script>
+{#    <script src="{% static 'js/blog/account-profile-get-data.js' %}"></script>#}
+{#    <script src="{% static 'js/blog/account-profile-edit-data.js' %}"></script>#}
 
     <script src="{% static 'js/blog/account-profile-posts-list.js' %}"></script>
-    <script src="{% static 'js/blog/account-profile-posts-add.js' %}"></script>
-    <script src="{% static 'js/blog/account-profile-posts-edit.js' %}"></script>
-    <script src="{% static 'js/blog/account-profile-posts-delete.js' %}"></script>
-
-    <script src="{% static 'js/blog/account-profile-liked-posts-list.js' %}"></script>
+{#    <script src="{% static 'js/blog/account-profile-posts-add.js' %}"></script>#}
+{#    <script src="{% static 'js/blog/account-profile-posts-edit.js' %}"></script>#}
+{#    <script src="{% static 'js/blog/account-profile-posts-delete.js' %}"></script>#}
+{##}
+{#    <script src="{% static 'js/blog/account-profile-liked-posts-list.js' %}"></script>#}
 {% endblock %}
