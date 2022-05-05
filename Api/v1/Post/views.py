@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .serializers import PostSerializer, PostCreateUpdateSerializer, PostListSerializer
+from .serializers import PostSerializer, PostCreateUpdateSerializer, PostListSerializer, PostRetrieveSerializer
 from Api.v1.Comment.serializers import CommentCreateUpdateSerializer, CommentListPostSerializer
 from core.Post.models import Post
 from core.Likes.models import PostLike
@@ -19,6 +19,7 @@ class PostViewSet(viewsets.ModelViewSet):
         'create': PostCreateUpdateSerializer,
         'update': PostCreateUpdateSerializer,
         'list': PostListSerializer,
+        'retrieve': PostRetrieveSerializer,
         'comment': CommentCreateUpdateSerializer,
         'comments': CommentListPostSerializer
     }
@@ -69,6 +70,12 @@ class PostViewSet(viewsets.ModelViewSet):
             # forcibly invalidate the prefetch cache on the instance.
             instance._prefetched_objects_cache = {}
 
+        return Response(serializer.data)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        context = {'user': self.request.user}
+        serializer = self.get_serializer(instance, context=context)
         return Response(serializer.data)
 
     def _get_modified_request_data(self, request):
