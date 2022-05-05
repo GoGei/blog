@@ -1,0 +1,72 @@
+
+/*==================================================
+  Post Contents CSS
+  ==================================================*/
+.post-view-content {
+    background: #f8f8f8;
+    border-radius: 4px;
+    width: 100%;
+    border: 1px solid #f1f2f2;
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.post-view-content .post-view-container {
+    padding: 20px;
+}
+
+.post-view-content .post-view-container .post-view-detail {
+    margin-left: 65px;
+    position: relative;
+}
+
+.post-view-content .post-view-container .post-view-detail .post-view-text {
+    line-height: 24px;
+    margin: 0;
+}
+
+.post-view-content .post-view-container .post-view-detail .reaction {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.post-view-content .post-view-container .post-view-detail .post-comment {
+    display: inline-flex;
+    width: 100%;
+}
+
+.post-view-content .post-view-container .post-view-detail .post-comment-container {
+    margin-bottom: 75px;
+}
+
+.post-view-content .post-view-container .post-view-detail .post-comment img.profile-photo-sm {
+    margin-right: 10px;
+}
+
+.post-view-content .post-view-container .post-view-detail .post-comment .form-control {
+    height: 30px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    margin: 7px 0;
+    min-width: 0;
+}
+
+img.profile-photo-md {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+img.profile-photo-sm {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.following {
+    color: #8dc63f;
+    font-size: 12px;
+    margin-left: 20px;
+}

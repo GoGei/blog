@@ -2,7 +2,7 @@
     <h2 class="blog-post-title">{{ post.title|truncatechars:30 }}</h2>
     <h4>{{ post.category.name|truncatechars:30 }}</h4>
     <p class="blog-post-meta">Created {{ post.created_date }} by <a href="#">{{ post.author.label }}</a></p>
-    {{ post.text|safe|escape }}
+    {{ post.text|safe|escape|truncatechars:500 }}
     <br>
     <a href="{% url 'blog-post-view' post.slug %}">Read more...</a>
 </div>

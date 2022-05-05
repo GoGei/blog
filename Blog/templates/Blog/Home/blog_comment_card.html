@@ -1,0 +1,17 @@
+{% load static hosts %}
+
+<div class="post-comment-container" id="post-comment-container-{{ comment.id }}">
+    <div class="post-comment">
+        <img src="{% static 'images/default_image_user.png' %}" alt="user"
+             class="profile-photo-md pull-left">
+        <p class="post-comment-text"><a href="" class="profile-link">{{ comment.author.label }} </a>{{ comment.text|safe|escape }}</p>
+    </div>
+    <div class="float-sm-left">
+        <a class="btn text-success"><i class="fa fa-thumbs-up"></i> 13</a>
+        <a class="btn text-danger"><i class="fa fa-thumbs-down"></i> 0</a>
+        {% if comment.is_author %}
+            <a class="btn post-comment-delete-button" data-action-url="{% host_url 'api:comments-detail' comment.id host 'api' %}"><i class="fa fa-trash"></i></a>
+            <a class="btn post-comment-edit-button" data-post-comment-id="{{ comment.id }}" data-action-url="{% host_url 'api:comments-detail' comment.id host 'api' %}"><i class="fa fa-pencil"></i></a>
+        {% endif %}
+    </div>
+</div>

@@ -1,3 +1,4 @@
+from django.db.models import Case, When
 from django.db.models.expressions import RawSQL
 from rest_framework import viewsets, filters, status
 from rest_framework.decorators import action
@@ -6,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import PostSerializer, PostCreateUpdateSerializer, PostListSerializer
-from Api.v1.Comment.serializers import CommentCreateUpdateSerializer
+from Api.v1.Comment.serializers import CommentCreateUpdateSerializer, CommentListPostSerializer
 from core.Post.models import Post
 from core.Likes.models import PostLike
 
@@ -19,6 +20,7 @@ class PostViewSet(viewsets.ModelViewSet):
         'update': PostCreateUpdateSerializer,
         'list': PostListSerializer,
         'comment': CommentCreateUpdateSerializer,
+        'comments': CommentListPostSerializer
     }
 
     filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
@@ -111,4 +113,24 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def comments(self, request, pk=None):
+        post = self.get_object()
+        user = request.user
+        queryset = post.comment_set.active().all().ordered()
+
+        queryset = queryset.annotate(
+            is_liked=RawSQL('select is_liked from comment_likes where comment_id=comment.id and user_id=%s',
+                            (user.id,)))  # noqa
+
+        queryset = queryset.annotate(is_author=Case(When(author_id=user.id, then=True), default=False))  # noqa
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)

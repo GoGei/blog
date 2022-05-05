@@ -1,0 +1,76 @@
+{% extends 'Blog/base.html' %}
+{% load static hosts %}
+
+{% block extracss %}
+    <link rel="stylesheet" href="{% static 'css/blog/blog-view.css' %}">
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="post-view-content"
+             data-post-add-comment="{% host_url 'api:posts-comment' post.id host 'api'%}" data-post-id="{{ post.id }}">
+            <h4><a href="{% url 'blog-index' %}">< Back to posts</a></h4>
+            <div class="post-view-container">
+                <div class="row">
+                    <div class="col-1">
+                        <img src="{% static 'images/default_image_user.png' %}" alt="user"
+                             class="profile-photo-md pull-left">
+                    </div>
+                    <div class="col-11">
+                        <div class="post-view-detail">
+                            <header class="mb-4">
+                                <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+                                <h4 class="fw-bolder mb-1">{{ post.category.label }}</h4>
+                                <div class="text-muted fst-italic mb-2">Created {{ post.created_date }} by <a
+                                        href="#">{{ post.author.label }}</a></div>
+                            </header>
+                            <div class="reaction">
+                                <a class="btn text-success"><i class="fa fa-thumbs-up"></i> 13</a>
+                                <a class="btn text-danger"><i class="fa fa-thumbs-down"></i> 0</a>
+                            </div>
+                            <hr>
+                            <div class="post-view-text">
+                                {{ post.text|safe|escape }}
+                            </div>
+                            <hr>
+                            <div class="post-comments-section"
+                                 data-post-comments-load-url="{% host_url 'api:posts-comments' post.id host 'api' %}"
+                                 data-post-comments-render-url="{% url 'blog-render-post-comments' %}"
+                                 data-post-comment-render-url="{% url 'blog-render-post-comment' %}"
+                                 data-post-comments-next-url="">
+                                <!-- comment section -->
+                            </div>
+                            <div id="post-comment-form">
+                                <form novalidate>
+                                    {% csrf_token %}
+                                    <div class="post-comment">
+                                        <img src="{% static 'images/default_image_user.png' %}" alt="user"
+                                             class="profile-photo-md pull-left">
+                                        <input type="text" class="form-control" placeholder="Post a comment"
+                                               id="comment-input" name="text">
+
+                                    </div>
+                                    <div class="float-sm-right" id="post-comment-buttons">
+                                        <a type="button" class="btn btn-light post-comment-save">Save</a>
+                                        <a type="button" class="btn btn-light post-comment-edit" hidden="hidden">Save
+                                            changes</a>
+                                        <a type="button" class="btn btn-light post-comment-cancel" hidden="hidden">Cancel
+                                            edit</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extrajs %}
+    <script src="{% static 'js/blog/post-comments.js' %}"></script>
+    <script src="{% static 'js/blog/post-comments-add.js' %}"></script>
+    <script src="{% static 'js/blog/post-comments-edit.js' %}"></script>
+    <script src="{% static 'js/blog/post-comments-delete.js' %}"></script>
+{% endblock %}

@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from core.Post.models import Post
+from core.Comment.models import Comment
 
 
 def blog_index_view(request):
@@ -12,7 +13,24 @@ def blog_index_view(request):
 
 def blog_post_view(request, post_slug):
     post = get_object_or_404(Post, slug=post_slug)
-    return render(request, 'Blog/Home/view_post.html', {'post': post})
+    return render(request, 'Blog/Home/blog_view_post.html', {'post': post})
+
+
+def render_post_comment(request):
+    comment_id = request.GET.get('comment_id')
+    comment = get_object_or_404(Comment, pk=comment_id)
+    content = render_to_string(
+        'Blog/Home/blog_comment_card.html',
+        {'comment': comment})
+    return JsonResponse({'content': content})
+
+
+def render_post_comments(request):
+    data = json.loads(request.GET.get('comments'))
+    content = render_to_string(
+        'Blog/Home/blog_post_comments_render.html',
+        {'comments': data})
+    return JsonResponse({'content': content})
 
 
 def render_posts(request):
