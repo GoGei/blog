@@ -5,7 +5,7 @@ LoadPosts = {};
         let scrollPosition = $(window).height() + $(window).scrollTop();
         if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
             let nextPostsUrl = $('#posts-container').data('posts-next-url');
-            loadPosts(nextPostsUrl);
+            loadPosts(nextPostsUrl, false, false);
         }
     });
 
@@ -16,15 +16,15 @@ LoadPosts = {};
             url.searchParams.set('search', value);
             window.history.pushState(null, '', url.toString());
 
-            loadPosts('', true);
+            loadPosts('', true, true);
         }
     });
 
-    function loadPosts(requestUrl = '', clearContainer = false) {
+    function loadPosts(requestUrl = '', clearContainer = false, allowedGetFromBaseUrl=true) {
         console.log('Load posts');
 
         let container = $('#posts-container');
-        if (!requestUrl) {
+        if ((!requestUrl) && (allowedGetFromBaseUrl)) {
             requestUrl = container.data('posts-url')
         }
 
@@ -34,24 +34,26 @@ LoadPosts = {};
 
         let data = getData();
 
-        $.ajax({
-            type: 'GET',
-            url: requestUrl,
-            data: data,
-            success: function (posts) {
-                container.data('posts-next-url', posts.next);
-                let postsData = JSON.stringify(posts.results);
-                let url = container.data('posts-render-url');
-                $.ajax({
-                    type: 'GET',
-                    url: url,
-                    data: {'posts': postsData},
-                    success: function (result) {
-                        container.append(result.content);
-                    }
-                })
-            }
-        });
+        if (requestUrl) {
+            $.ajax({
+                type: 'GET',
+                url: requestUrl,
+                data: data,
+                success: function (posts) {
+                    container.data('posts-next-url', posts.next);
+                    let postsData = JSON.stringify(posts.results);
+                    let url = container.data('posts-render-url');
+                    $.ajax({
+                        type: 'GET',
+                        url: url,
+                        data: {'posts': postsData},
+                        success: function (result) {
+                            container.append(result.content);
+                        }
+                    })
+                }
+            });
+        }
     }
 
     function getData() {

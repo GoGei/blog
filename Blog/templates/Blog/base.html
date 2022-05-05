@@ -27,10 +27,6 @@
                 <a class="blog-header-logo text-dark" href="{% url 'blog-index' %}">Large</a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
-                <nav class="navbar navbar-light bg-light justify-content-between">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search for posts..."
-                               aria-label="Search" id="posts-search">
-                </nav>
                 {% if user.is_authenticated %}
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'blog-logout' %}">Logout</a>
                     <a class="btn btn-sm btn-outline-secondary" href="{% url 'profile' %}">Profile</a>

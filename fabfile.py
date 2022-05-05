@@ -92,4 +92,4 @@ def create_graph_models(*args):
 @task
 def fill_test_db():
     with cd(PROJECT_ROOT):
-        local(f'./manage.py fill_db_with_test_data -c True -uc 5 -cc 5 -pc 5 -mc 2 -plc 3 -clc 5')
+        local(f'./manage.py fill_db_with_test_data -c True -uc 2 -cc 5 -pc 3 -mc 2 -plc 3 -clc 5')
