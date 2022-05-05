@@ -70,7 +70,18 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ORIGIN_WHITELIST = [
+#     'http://blog.local',
+# ]
+# CSRF_COOKIE_DOMAIN = '.blog.local'
+# SESSION_COOKIE_DOMAIN = '.blog.local'
+# CSRF_TRUSTED_ORIGINS = ['.blog.local']
+# CSRF_COOKIE_SECURE = False
+# CSRF_COOKIE_HTTPONLY = False
+#
+# AUTHENTICATION_BACKENDS = [
+#     'django.contrib.auth.backends.ModelBackend'
+# ]
 
 # redefine in local_settings
 # if DEBUG and DEBUG_TOOLBAR:
@@ -159,13 +170,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 50,
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-    ]
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
 }
 
 
@@ -176,13 +187,30 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'full',
     },
     'profile': {
-        'toolbar': 'profile',
-        'toolbar_profile': [
-            ['Bold', 'Italic', 'Underline'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter',
-             'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink'],
-            ['RemoveFormat', 'Source']
-        ]
+        'toolbar': {
+            'toolbar': [
+                ['Undo', 'Redo',
+                 '-', 'Bold', 'Italic', 'Underline',
+                 '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock',
+                 '-', 'Outdent', 'Indent',
+                 '-', 'Link', 'Unlink',
+                 'Format',
+                 '-',
+                 'Image',
+                 ],
+                ['HorizontalRule',
+                 '-', 'BulletedList', 'NumberedList',
+                 '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord',
+                 '-', 'SpecialChar',
+                 '-', 'Source',
+                 ],
+                ['Maximize']
+            ],
+            'toolbarCanCollapse': True,
+            'width': '100%',
+            "removePlugins": "stylesheetparser",
+            "allowedContent": True
+
+        },
     }
 }

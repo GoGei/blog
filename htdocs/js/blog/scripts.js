@@ -15,7 +15,6 @@ function getCookie(name) {
 }
 
 $.ajaxSetup({
-    // mode: 'same-origin',
     headers: {
         'X-CSRFToken': getCookie('csrftoken'),
         // 'sessionid': getCookie('sessionid'),
