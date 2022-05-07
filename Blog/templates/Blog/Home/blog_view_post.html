@@ -26,8 +26,25 @@
                                         href="#">{{ post.author.label }}</a></div>
                             </header>
                             <div class="reaction">
-                                <a class="btn text-success"><i class="fa fa-thumbs-up"></i> 13</a>
-                                <a class="btn text-danger"><i class="fa fa-thumbs-down"></i> 0</a>
+                                {% if user.is_authenticated %}
+                                    <a class="btn btn-like {% if post.liked %} text-success {% endif %}"
+                                       data-post-id="{{ post.id }}">
+                                        <i class="fa fa-thumbs-up"></i> <span
+                                            class="like-label-counter">{{ post.likes }}</span>
+                                    </a>
+                                    <a class="btn btn-dislike {% if post.disliked %} text-danger {% endif %}"
+                                       data-post-id="{{ post.id }}">
+                                        <i class="fa fa-thumbs-down"></i> <span
+                                            class="like-label-counter">{{ post.dislikes }}</span>
+                                    </a>
+                                {% else %}
+                                    <a class="btn" data-toggle="modal" data-target="#userShouldLogin"><i class="fa fa-thumbs-up"></i> <span
+                                            class="like-label-counter">{{ post.likes }}</span>
+                                    </a>
+                                    <a class="btn" data-toggle="modal" data-target="#userShouldLogin"><i class="fa fa-thumbs-down"></i> <span
+                                            class="like-label-counter">{{ post.dislikes }}</span>
+                                    </a>
+                                {% endif %}
                             </div>
                             <hr>
                             <div class="post-view-text">
@@ -52,11 +69,22 @@
 
                                     </div>
                                     <div class="float-sm-right" id="post-comment-buttons">
-                                        <a type="button" class="btn btn-light post-comment-save">Save</a>
-                                        <a type="button" class="btn btn-light post-comment-edit" hidden="hidden">Save
-                                            changes</a>
-                                        <a type="button" class="btn btn-light post-comment-cancel" hidden="hidden">Cancel
-                                            edit</a>
+                                        {% if user.is_authenticated %}
+                                            <a type="button" class="btn btn-light post-comment-save">Save</a>
+                                            <a type="button" class="btn btn-light post-comment-edit" hidden="hidden">Save
+                                                changes</a>
+                                            <a type="button" class="btn btn-light post-comment-cancel" hidden="hidden">Cancel
+                                                edit</a>
+                                        {% else %}
+                                            <a type="button" class="btn btn-light" data-toggle="modal"
+                                               data-target="#userShouldLogin">Save</a>
+                                            <a type="button" class="btn btn-light" data-toggle="modal"
+                                               data-target="#userShouldLogin" hidden="hidden">Save
+                                                changes</a>
+                                            <a type="button" class="btn btn-light" data-toggle="modal"
+                                               data-target="#userShouldLogin" hidden="hidden">Cancel
+                                                edit</a>
+                                        {% endif %}
                                     </div>
                                 </form>
                             </div>
@@ -73,4 +101,6 @@
     <script src="{% static 'js/blog/post-comments-add.js' %}"></script>
     <script src="{% static 'js/blog/post-comments-edit.js' %}"></script>
     <script src="{% static 'js/blog/post-comments-delete.js' %}"></script>
+
+    <script src="{% static 'js/blog/post-view-likes.js' %}"></script>
 {% endblock %}

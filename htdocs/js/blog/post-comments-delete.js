@@ -1,6 +1,7 @@
 PostCommentsDelete = {};
 (function (obj, $) {
     function init() {
+        $('.post-comment-delete-button').unbind('click');
         $('.post-comment-delete-button').on('click', function (e) {
             e.preventDefault();
             console.log('Post comment delete');

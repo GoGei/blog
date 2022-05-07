@@ -71,6 +71,7 @@ PostCommentsEdit = {};
     }
 
     function init() {
+        $('.post-comment-edit-button').unbind('click');
         $('.post-comment-edit-button').on('click', function (e) {
             e.preventDefault();
             let postCommentId = $(this).data('post-comment-id');

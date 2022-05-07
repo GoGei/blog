@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from core.Post.models import Post
 from core.Comment.models import Comment
+from core.Likes.models import PostLike
 
 
 def blog_index_view(request):
@@ -13,6 +14,21 @@ def blog_index_view(request):
 
 def blog_post_view(request, post_slug):
     post = get_object_or_404(Post, slug=post_slug)
+    user = request.user
+    qs = PostLike.objects.select_related('post', 'user').filter(post=post)
+    likes = qs.filter(is_liked=True).count()
+    dislikes = qs.filter(is_liked=False).count()
+
+    setattr(post, 'likes', likes)
+    setattr(post, 'dislikes', dislikes)
+
+    liked, disliked = False, False
+    if user.is_authenticated:
+        user_qs = qs.filter(user=user)
+        liked = user_qs.filter(is_liked=True).exists()
+        disliked = user_qs.filter(is_liked=False).exists()
+    setattr(post, 'liked', liked)
+    setattr(post, 'disliked', disliked)
     return render(request, 'Blog/Home/blog_view_post.html', {'post': post})
 
 
