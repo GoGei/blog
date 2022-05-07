@@ -1,4 +1,5 @@
-<form class="form" action="{{ form.action_url }}" method="{{ form.method|default:'post' }}" id="registrationForm" novalidate>
+<form class="form" action="{{ form.action_url }}" method="{{ form.method|default:'post' }}" novalidate>
+    {% csrf_token %}
     <div class="row">
         <div class="col">
             {% for field in form.body %}
@@ -11,15 +12,6 @@
                     </div>
                 {% endif %}
             {% endfor %}
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <br>
-                    <button class="btn btn-lg btn-success" type="submit"><i class="fa fa-check"></i>
-                        Save
-                    </button>
-                    <button class="btn btn-lg" type="reset"><i class="fa fa-repeat"></i> Reset</button>
-                </div>
-            </div>
         </div>
         <div class="col">
             {% for field in form.body %}
@@ -32,6 +24,15 @@
                     </div>
                 {% endif %}
             {% endfor %}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12 form-butns-container">
+            <br>
+            <button class="btn btn-lg btn-success" type="submit"><i class="fa fa-check"></i>Save</button>
+            <button class="btn btn-lg" type="reset"><i class="fa fa-repeat"></i> Reset</button>
+            <button class="btn btn-lg btn-info reset-password-btn" type="button"><i class="fa fa-key"></i> Reset password</button>
+            <button class="btn btn-lg reset-password-cancel-btn" type="button" hidden="hidden"><i class="fa fa-undo"></i> Undo reset password</button>
         </div>
     </div>
 </form>

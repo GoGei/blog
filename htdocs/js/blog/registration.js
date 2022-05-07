@@ -16,7 +16,6 @@ RegistrationModalForm = {};
             async: false,
             success: function (response) {
                 let form = response.form;
-                console.log(form)
                 let $modalBody = obj.modal.find('.modal-body');
                 $modalBody.html(form);
             }

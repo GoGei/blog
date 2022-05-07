@@ -1,9 +1,12 @@
 from django.db.models.expressions import RawSQL
-from rest_framework import generics, viewsets
+from drf_yasg2.utils import swagger_auto_schema
+from rest_framework import generics, viewsets, status
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .serializers import ProfileSerializer, ProfileUpdateSerializer
+from Api.v1.User.serializers import PasswordSerializer
 from Api.v1.Post.serializers import PostListSerializer
 from core.User.models import User
 from core.Post.models import Post
@@ -92,3 +95,16 @@ class ProfileLikedView(viewsets.ReadOnlyModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class ProfileSetPassword(APIView):
+    @swagger_auto_schema(request_body=PasswordSerializer)
+    def post(self, request):
+        serializer = PasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = request.user
+        user.set_password(serializer.validated_data['password'])
+        user.save()
+
+        return Response(status=status.HTTP_200_OK)

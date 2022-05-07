@@ -36,7 +36,7 @@ class UserManager(BaseUserManager):
 class User(CrmMixin, AbstractBaseUser):
     first_name = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50, null=True)
-    email = models.EmailField(max_length=255, unique=True, db_index=True, null=True)
+    email = models.EmailField(max_length=255, unique=True, db_index=True)
     phone = models.CharField(max_length=50, unique=True, db_index=True, null=True)
     # username = models.CharField(max_length=255, unique=True, db_index=True, null=True)
     # photo = models.ImageField(null=True)

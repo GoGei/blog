@@ -23,7 +23,7 @@ class PasswordSerializer(serializers.Serializer):
 
     repeat_password = serializers.CharField(
         required=True, min_length=8, max_length=36,
-        style={'input_type': 'password', 'placeholder': 'Password'}
+        style={'input_type': 'password', 'placeholder': 'Repeat password'}
     )
 
     def validate(self, data):

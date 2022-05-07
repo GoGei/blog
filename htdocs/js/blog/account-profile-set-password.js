@@ -1,4 +1,4 @@
-AccountEditProfile = {};
+AccountSetPassword = {};
 
 (function (obj, $) {
     function initContainer() {
@@ -16,30 +16,14 @@ AccountEditProfile = {};
     }
 
     function initWidgets() {
-        let container = obj.container;
-        let phoneFields = container.find(".phone-number");
-        phoneFields.inputmask("mask", {"mask": "+380(99)-999-9999"});
+        $(document).on('click', '.password-icon', function () {
+            let input = $(this).parent().find('input');
+            input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password')
+        });
     }
 
     function initFormActions() {
         let $form = $(obj.form);
-
-        $form.on('reset', function (e) {
-            e.preventDefault();
-            initContainer();
-        });
-
-        $form.find('.reset-password-btn').on('click',function (e) {
-            e.preventDefault();
-            AccountSetPassword.init();
-            $form.find('.reset-password-cancel-btn').removeAttr('hidden');
-        });
-
-        $form.find('.reset-password-cancel-btn').on('click',function (e) {
-            e.preventDefault();
-            AccountSetPassword.container.empty();
-            $form.find('.reset-password-cancel-btn').attr('hidden', 'hidden');
-        });
 
         $form.on('submit', function (e) {
             e.preventDefault();
@@ -48,15 +32,11 @@ AccountEditProfile = {};
                 url: $form.attr('action'),
                 data: $form.serialize(),
                 success: function (response) {
-                    clearForm();
-                    $('<div/>', {
-                        'id': 'successMessage',
-                        'class': 'success-message alert alert-success',
-                        'text': 'Profile info is saved'
-                    }).prependTo($form);
+                    window.location = $form.data("redirect-view");
                 }, error: function (response) {
-                    clearForm();
                     let errors = response.responseJSON;
+                    $form.find('.error-message').remove();
+                    $form.find('.has-error').removeClass('has-error');
                     $.each(errors, function (name, messages) {
                         let field = $form.find(`[name=${name}]`);
                         if (field.length) {
@@ -82,23 +62,11 @@ AccountEditProfile = {};
         });
     }
 
-    function clearForm() {
-        let $form = $(obj.form);
-        $form.find('.has-error').removeClass();
-        $form.find('.error-message').remove();
-        $form.find('.success-message').remove();
-    }
-
     function init() {
-        console.log('Load edit profile');
-        obj.container = $('#profile-edit-data-container');
+        console.log('Load set password');
+        obj.container = $('#profile-set-password-container');
         initContainer();
     }
 
     obj.init = init;
-})(AccountEditProfile, $);
-
-
-$(document).ready(function () {
-    AccountEditProfile.init();
-});
+})(AccountSetPassword, $);

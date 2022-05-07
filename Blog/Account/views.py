@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django_hosts import reverse
 
 from core.Post.models import Post
-from .forms import PostForm, ProfileForm
+from .forms import PostForm, ProfileForm, ResetPasswordForm
 
 
 @login_required
@@ -114,5 +114,18 @@ def render_profile_form(request):
 
     content = render_to_string(
         'Blog/Account/profile_edit_profile_form.html',
+        {'form': form})
+    return JsonResponse({'content': content})
+
+
+@login_required
+def render_profile_password_form(request):
+    form = {
+        'body': ResetPasswordForm(),
+        'action_url': reverse('api:profile-set-password', host='api'),
+    }
+
+    content = render_to_string(
+        'Blog/Account/profile_password_profile_form.html',
         {'form': form})
     return JsonResponse({'content': content})

@@ -7,6 +7,7 @@ urlpatterns = [
     url('post/(?P<post_slug>[\w\W\-]+)/$', views.blog_profile_post_view, name='profile-post-view'),
 
     url('render-profile-form/$', views.render_profile_form, name='profile-render-profile-form'),
+    url('render-set-password-form/$', views.render_profile_password_form, name='profile-render-set-password-form'),
 
     url('render-post/$', views.render_post, name='profile-render-post'),
     url('render-posts/$', views.render_posts, name='profile-posts'),

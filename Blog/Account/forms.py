@@ -1,7 +1,6 @@
 from django import forms
 # from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from core.Category.models import Category
-from core.User.models import User
 from core.Utils.fields import PhoneField
 
 
@@ -15,7 +14,7 @@ class PostForm(forms.Form):
     # widget=CKEditorUploadingWidget(config_name='profile'))
 
 
-class ProfileForm(forms.ModelForm):
+class ProfileForm(forms.Form):
     first_name = forms.CharField(label='First name', max_length=50,
                                  widget=forms.TextInput({'placeholder': 'First name'}))
     last_name = forms.CharField(label='Last name', max_length=50,
@@ -24,11 +23,10 @@ class ProfileForm(forms.ModelForm):
                              widget=forms.TextInput({'placeholder': 'Email address'}))
     phone = PhoneField(label='Phone', widget=forms.TextInput({'placeholder': 'Phone number',
                                                               'class': 'form-control phone-number'}))
-    # password = forms.CharField(label='Password',
-    #                            widget=forms.PasswordInput({'placeholder': 'Password'}))
-    # repeat_password = forms.CharField(label='Repeat password',
-    #                                   widget=forms.PasswordInput({'placeholder': 'Password'}))
 
-    class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email', 'phone']
+
+class ResetPasswordForm(forms.Form):
+    password = forms.CharField(label='Password',
+                               widget=forms.PasswordInput({'placeholder': 'Password'}))
+    repeat_password = forms.CharField(label='Repeat password',
+                                      widget=forms.PasswordInput({'placeholder': 'Repeat password'}))

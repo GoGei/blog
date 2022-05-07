@@ -2,17 +2,6 @@
 <div class="container justify-content-center align-items-center">
     <div class="card bg-light">
         <article class="card-body mx-auto">
-            <p>
-                <a href="" class="btn btn-block btn-twitter disabled"> <i class="fab fa-twitter"></i> &nbsp;
-                    Login via
-                    Twitter</a>
-                <a href="" class="btn btn-block btn-facebook disabled"> <i class="fab fa-facebook-f"></i> &nbsp;
-                    Login via
-                    facebook</a>
-            </p>
-            <p class="divider-text">
-                <span class="bg-light">OR</span>
-            </p>
             {% include 'Blog/Login/login_non_form_error_block.html' %}
             <form method="post" action="{{ action }}">
                 {% csrf_token %}
@@ -20,9 +9,6 @@
                 {% for field in form %}
                     <div class="form-group">
                         <div class=" input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
-                            </div>
                             {% include 'base_form_render_field.html' %}
                         </div>
                     </div>

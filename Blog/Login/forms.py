@@ -24,7 +24,7 @@ class RegistrationForm(forms.Form):
     password = forms.CharField(label='Password',
                                widget=forms.PasswordInput({'placeholder': 'Password'}))
     repeat_password = forms.CharField(label='Repeat password',
-                                      widget=forms.PasswordInput({'placeholder': 'Password'}))
+                                      widget=forms.PasswordInput({'placeholder': 'Repeat password'}))
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
