@@ -3,11 +3,14 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 
+from Api.permissions import IsStaffOrReadOnly
 from .serializers import CategorySerializer, CategoryCreateUpdateSerializer
 from core.Category.models import Category
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsStaffOrReadOnly]
+
     queryset = Category.objects.all().ordered()
     serializer_class = CategorySerializer
     serializer_map = {

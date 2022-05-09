@@ -1,15 +1,16 @@
 from rest_framework import viewsets, filters, status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 
+from Api.permissions import IsAdminOrReadOnly
 from .serializers import UserSerializer, UserCreateUpdateSerializer, PasswordSerializer
 from core.User.models import User
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminOrReadOnly]
+
     queryset = User.objects.all().order_by('-email')
     serializer_class = UserSerializer
     serializer_map = {

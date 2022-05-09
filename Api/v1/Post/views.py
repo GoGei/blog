@@ -1,18 +1,20 @@
 from django.db.models import Case, When
 from django.db.models.expressions import RawSQL
-from rest_framework import viewsets, filters, status
+from rest_framework import viewsets, filters, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import PostSerializer, PostCreateUpdateSerializer, PostListSerializer, PostRetrieveSerializer
 from Api.v1.Comment.serializers import CommentCreateUpdateSerializer, CommentListPostSerializer
+from Api.permissions import IsOwnerOrReadOnly
 from core.Post.models import Post
 from core.Likes.models import PostLike
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsOwnerOrReadOnly, permissions.IsAuthenticatedOrReadOnly]
+
     queryset = Post.objects.select_related('author', 'category').ordered()
     serializer_class = PostSerializer
     serializer_map = {
@@ -72,6 +74,10 @@ class PostViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
+    def partial_update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
+        return self.update(request, *args, **kwargs)
+
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
         context = {'user': self.request.user}
@@ -83,7 +89,7 @@ class PostViewSet(viewsets.ModelViewSet):
         data['author'] = request.user.id
         return data
 
-    @action(detail=True, methods=['get', 'post'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['get', 'post'], permission_classes=[permissions.IsAuthenticated])
     def like(self, request, pk=None):
         post = self.get_object()
         user = request.user
@@ -91,7 +97,7 @@ class PostViewSet(viewsets.ModelViewSet):
         obj.like()
         return Response(status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['get', 'post'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['get', 'post'], permission_classes=[permissions.IsAuthenticated])
     def dislike(self, request, pk=None):
         post = self.get_object()
         user = request.user
@@ -99,7 +105,7 @@ class PostViewSet(viewsets.ModelViewSet):
         obj.dislike()
         return Response(status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['get', 'post'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['get', 'post'], permission_classes=[permissions.IsAuthenticated])
     def deactivate(self, request, pk=None):
         post = self.get_object()
         user = request.user
@@ -107,7 +113,7 @@ class PostViewSet(viewsets.ModelViewSet):
         obj.deactivate()
         return Response(status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['post'], permission_classes=[permissions.IsAuthenticated])
     def comment(self, request, pk=None):
         post = self.get_object()
         user = request.user

@@ -9,11 +9,11 @@ class Command(BaseCommand):
         parser.add_argument("-s", "--staff",
                             dest="is_staff",
                             type=bool,
-                            default=None)
+                            default=False)
         parser.add_argument("-u", "--superuser",
                             dest="is_superuser",
                             type=bool,
-                            default=None)
+                            default=False)
 
     def handle(self, *args, **options):
         is_staff = options.get('is_staff', False)

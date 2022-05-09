@@ -1,16 +1,18 @@
 from django.db.models.expressions import RawSQL
-from rest_framework import viewsets, filters, status
+from rest_framework import viewsets, filters, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import CommentSerializer, CommentCreateUpdateSerializer, CommentListSerializer
+from Api.permissions import IsOwnerOrReadOnly
 from core.Comment.models import Comment
 from core.Likes.models import CommentLike
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsOwnerOrReadOnly, permissions.IsAuthenticatedOrReadOnly]
+
     queryset = Comment.objects.select_related('author', 'post').ordered()
     serializer_class = CommentSerializer
     serializer_map = {
@@ -71,7 +73,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         data['author'] = request.user.id
         return data
 
-    @action(detail=True, methods=['get', 'post'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['get', 'post'], permission_classes=[permissions.IsAuthenticated])
     def like(self, request, pk=None):
         comment = self.get_object()
         user = request.user
@@ -79,7 +81,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         obj.like()
         return Response(status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['get', 'post'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['get', 'post'], permission_classes=[permissions.IsAuthenticated])
     def dislike(self, request, pk=None):
         comment = self.get_object()
         user = request.user
@@ -87,7 +89,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         obj.dislike()
         return Response(status=status.HTTP_200_OK)
 
-    @action(detail=True, methods=['get', 'post'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['get', 'post'], permission_classes=[permissions.IsAuthenticated])
     def deactivate(self, request, pk=None):
         comment = self.get_object()
         user = request.user

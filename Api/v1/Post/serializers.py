@@ -35,8 +35,11 @@ class PostRetrieveSerializer(serializers.ModelSerializer):
 
     def get_is_liked(self, obj):
         user = self.context.get('user')
-        like = PostLike.objects.select_related('post', 'user').filter(post=obj, user=user).first()
-        return like.is_liked
+        if user.is_authenticated:
+            like = PostLike.objects.select_related('post', 'user').filter(post=obj, user=user).first()
+            if like:
+                return like.is_liked
+        return False
 
     def get_likes_counter(self, obj):
         return PostLike.objects.select_related('post').filter(post=obj, is_liked=True).count()
