@@ -69,6 +69,7 @@ class ProfilePostsView(viewsets.ReadOnlyModelViewSet):
         queryset = queryset.annotate(
             is_liked=RawSQL('select is_liked from post_likes where post_id=post.id and user_id=%s',
                             (user.id,)))  # noqa
+        queryset = queryset.ordered()
 
         page = self.paginate_queryset(queryset)
         if page is not None:

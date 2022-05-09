@@ -187,30 +187,22 @@ CKEDITOR_CONFIGS = {
         'toolbar': 'full',
     },
     'profile': {
-        'toolbar': {
-            'toolbar': [
-                ['Undo', 'Redo',
-                 '-', 'Bold', 'Italic', 'Underline',
-                 '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock',
-                 '-', 'Outdent', 'Indent',
-                 '-', 'Link', 'Unlink',
-                 'Format',
-                 '-',
-                 'Image',
-                 ],
-                ['HorizontalRule',
-                 '-', 'BulletedList', 'NumberedList',
-                 '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord',
-                 '-', 'SpecialChar',
-                 '-', 'Source',
-                 ],
-                ['Maximize']
-            ],
-            'toolbarCanCollapse': True,
-            'width': '100%',
-            "removePlugins": "stylesheetparser",
-            "allowedContent": True
-
-        },
+        'toolbar': [
+            ['Undo', 'Redo',
+             '-', 'Bold', 'Italic', 'Underline',
+             '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock',
+             '-', 'Outdent', 'Indent',
+             '-', 'Link', 'Unlink',
+             'Format',
+             ],
+            ['HorizontalRule',
+             '-', 'BulletedList', 'NumberedList',
+             '-', 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord',
+             '-', 'SpecialChar',
+             ],
+            ['Maximize']
+        ],
+        'toolbarCanCollapse': True,
+        'width': '100%',
     }
 }

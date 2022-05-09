@@ -21,7 +21,44 @@ EditPostModalForm = {};
                 $modalBody.html(form);
             }
         });
+        initWidgets();
         initButtons();
+    }
+
+    function initWidgets(){
+        let $category = $('#id_category');
+
+        $category.select2({
+            allowClear: true,
+            placeholder: 'Select an option',
+            width: '100%',
+            ajax: {
+                url: $category.data('ajax-url'),
+                method: 'GET',
+                dataType: 'json',
+                data: function (params) {
+                    return {
+                        search: params.term,
+                        page: params.page,
+                        format: 'json'
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    return {
+                        pagination: {
+                            more: Boolean(data.next)
+                        },
+                        results: $.map(data.results, function (obj) {
+                            return {
+                                id: obj.id,
+                                text: obj.short_name
+                            };
+                        })
+                    }
+                }
+            }
+        });
     }
 
     function initButtons() {
@@ -31,6 +68,10 @@ EditPostModalForm = {};
         $saveButton.on('click', function (e){
             e.preventDefault();
             let $form = $(obj.modal.find('form'));
+
+            for (var instance in CKEDITOR.instances)
+                CKEDITOR.instances[instance].updateElement();
+
             let formData = $form.serialize();
             $.ajax({
                 type: $form.attr('method'),

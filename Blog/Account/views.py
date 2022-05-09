@@ -29,6 +29,7 @@ def render_post_add_form(request):
         'title': 'Add post',
         'body': form_body,
         'method': 'POST',
+        'inline_form': True,
         'action_url': reverse('api:posts-list', host='api'),
         'buttons': {'save': True, 'cancel': True}
     }

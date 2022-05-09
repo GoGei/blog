@@ -1,17 +1,21 @@
 from django import forms
-# from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django_hosts.resolvers import reverse
+
 from core.Category.models import Category
 from core.Utils.fields import PhoneField
 
 
 class PostForm(forms.Form):
     category = forms.ModelChoiceField(label='Category', empty_label='Select a category',
-                                      queryset=Category.objects.active().all())
+                                      queryset=Category.objects.active(),
+                                      widget=forms.Select(attrs={'style': 'width: 100%;',
+                                                                 'class': 'form-control select2',
+                                                                 'data-ajax-url': reverse('api:categories-list',
+                                                                                          host='api')}))
     title = forms.CharField(label='Title', max_length=100)
     text = forms.CharField(label='Text', max_length=4048,
-                           widget=forms.Textarea())
-    # TODO add CKeditor serialization
-    # widget=CKEditorUploadingWidget(config_name='profile'))
+                           widget=CKEditorUploadingWidget(config_name='profile'))
 
 
 class ProfileForm(forms.Form):
