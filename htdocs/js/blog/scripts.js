@@ -22,11 +22,26 @@ $.ajaxSetup({
 });
 
 
-$(".go-to-the-top").click(function () {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+$(document).ready(function () {
+    let backToTopButton = document.getElementById("btn-back-to-top");
+
+    window.onscroll = function () {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            backToTopButton.style.display = "block";
+        } else {
+            backToTopButton.style.display = "none";
+        }
+    };
+
+    backToTopButton.addEventListener("click", backToTop);
+
+    function backToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
 });
 
-$(".phone-number").inputmask("mask", { "mask": "+380(99)-999-9999" });
+
+$(".phone-number").inputmask("mask", {"mask": "+380(99)-999-9999"});
