@@ -18,7 +18,13 @@ class PostListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ['id', 'author', 'category', 'title', 'text', 'slug', 'is_liked', 'created_date']
+        fields = ['id', 'author', 'category', 'title', 'text', 'slug', 'is_liked', 'created_date', 'is_active']
+
+
+class PostsArchiveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id', 'title', 'slug']
 
 
 class PostRetrieveSerializer(serializers.ModelSerializer):

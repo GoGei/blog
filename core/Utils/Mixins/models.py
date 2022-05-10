@@ -15,6 +15,10 @@ class ActiveQuerySet(models.QuerySet):
         for item in self:
             item.archive(archived_by)
 
+    def restore(self, restored_by=None):
+        for item in self:
+            item.restore(restored_by)
+
     def ordered(self):
         return self.all().order_by('-created_stamp')
 

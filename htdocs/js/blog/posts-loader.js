@@ -57,7 +57,11 @@ LoadPosts = {};
     }
 
     function getData() {
-        let data = {'limit': 10};
+        let data = {
+            'limit': 10,
+            'is_active': true,
+            // 'category_is_active': true,
+        };
 
         let url = new URL(document.location.href);
         if (url.searchParams.has('category')) {

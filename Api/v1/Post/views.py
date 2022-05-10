@@ -1,15 +1,42 @@
+import django_filters
+from django_filters import rest_framework
 from django.db.models import Case, When
 from django.db.models.expressions import RawSQL
 from rest_framework import viewsets, filters, status, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import PostSerializer, PostCreateUpdateSerializer, PostListSerializer, PostRetrieveSerializer
 from Api.v1.Comment.serializers import CommentCreateUpdateSerializer, CommentListPostSerializer
 from Api.permissions import IsOwnerOrReadOnly
 from core.Post.models import Post
 from core.Likes.models import PostLike
+
+
+class PostsFilter(rest_framework.FilterSet):
+    is_active = django_filters.ChoiceFilter(label='Is active', empty_label='Not selected', method='is_active_filter',
+                                            choices=[('true', 'Active'), ('false', 'Not active')])
+    category_is_active = django_filters.ChoiceFilter(label='Category is active', empty_label='Not selected',
+                                                     method='category_is_active_filter',
+                                                     choices=[('true', 'Active'), ('false', 'Not active')])
+
+    class Meta:
+        model = Post
+        fields = ['category', 'author', 'is_active', 'category_is_active']
+
+    def is_active_filter(self, queryset, name, value):
+        if value == 'true':
+            queryset = queryset.filter(archived_stamp__isnull=True)
+        elif value == 'false':
+            queryset = queryset.filter(archived_stamp__isnull=False)
+        return queryset
+
+    def category_is_active_filter(self, queryset, name, value):
+        if value == 'true':
+            queryset = queryset.filter(category__archived_stamp__isnull=True)
+        elif value == 'false':
+            queryset = queryset.filter(category__archived_stamp__isnull=False)
+        return queryset
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -26,9 +53,10 @@ class PostViewSet(viewsets.ModelViewSet):
         'comments': CommentListPostSerializer
     }
 
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, rest_framework.DjangoFilterBackend]
     search_fields = ['title', 'author__email', 'text']
-    filterset_fields = ['category', 'author']
+    filterset_class = PostsFilter
+    # filterset_fields = ['category', 'author'']
     ordering_fields = ['title']
 
     def get_serializer_class(self):
@@ -41,7 +69,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
         queryset = queryset.annotate(
             is_liked=RawSQL('select is_liked from post_likes where post_id=post.id and user_id=%s',
-                               (user.id,)))  # noqa
+                            (user.id,)))  # noqa
 
         page = self.paginate_queryset(queryset)
         if page is not None:

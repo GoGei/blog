@@ -6,7 +6,10 @@ $(document).ready(function () {
     $.ajax({
         type: 'GET',
         url: categoriesUrl,
-        data: {'ordering': 'position'},
+        data: {
+            'ordering': 'position',
+            'is_active': true
+        },
         success: function (data) {
             let categories = JSON.stringify(data.results);
             let renderUrl = $categoriesContainer.data('categories-render-url');

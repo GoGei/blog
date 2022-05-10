@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from core.Category.models import Category
 
 
@@ -7,6 +6,19 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'name', 'position', 'slug', 'short_name']
+
+
+class CategoryListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'position', 'slug', 'short_name', 'is_active']
+        read_only_fields = ['id', 'slug', 'is_active']
+
+
+class CategoryArchiveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'slug']
 
 
 class CategoryCreateUpdateSerializer(serializers.ModelSerializer):

@@ -59,7 +59,7 @@ class ProfilePostsView(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if user and user.is_authenticated:
-            return user.post_set.all()
+            return user.post_set.active().all()
         return Post.objects.none()
 
     def list(self, request, *args, **kwargs):
@@ -82,7 +82,7 @@ class ProfilePostsView(viewsets.ReadOnlyModelViewSet):
 
 class ProfileLikedView(viewsets.ReadOnlyModelViewSet):
     serializer_class = PostListSerializer
-    queryset = PostLike.objects.select_related('post', 'user').filter(is_liked=True)
+    queryset = PostLike.objects.select_related('post', 'user').filter(is_liked=True, post__archived_stamp__isnull=True)
 
     def list(self, request, *args, **kwargs):
         user = request.user
