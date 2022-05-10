@@ -30,19 +30,19 @@
                                     <a class="btn btn-like {% if post.liked %} text-success {% endif %}"
                                        data-post-id="{{ post.id }}">
                                         <i class="fa fa-thumbs-up"></i> <span
-                                            class="like-label-counter">{{ post.likes }}</span>
+                                            class="like-label-counter">{{ post.likes_counter }}</span>
                                     </a>
                                     <a class="btn btn-dislike {% if post.disliked %} text-danger {% endif %}"
                                        data-post-id="{{ post.id }}">
                                         <i class="fa fa-thumbs-down"></i> <span
-                                            class="like-label-counter">{{ post.dislikes }}</span>
+                                            class="like-label-counter">{{ post.dislikes_counter }}</span>
                                     </a>
                                 {% else %}
                                     <a class="btn" data-toggle="modal" data-target="#userShouldLogin"><i class="fa fa-thumbs-up"></i> <span
-                                            class="like-label-counter">{{ post.likes }}</span>
+                                            class="like-label-counter">{{ post.likes_counter }}</span>
                                     </a>
                                     <a class="btn" data-toggle="modal" data-target="#userShouldLogin"><i class="fa fa-thumbs-down"></i> <span
-                                            class="like-label-counter">{{ post.dislikes }}</span>
+                                            class="like-label-counter">{{ post.dislikes_counter }}</span>
                                     </a>
                                 {% endif %}
                             </div>
