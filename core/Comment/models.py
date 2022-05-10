@@ -20,4 +20,3 @@ class Comment(CrmMixin):
     @cached_property
     def dislikes_counter(self):
         return CommentLike.objects.select_related('comment').filter(comment=self, is_liked=False).count()
-

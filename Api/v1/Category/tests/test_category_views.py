@@ -6,6 +6,7 @@ from rest_framework.test import APIClient
 from core.User.factories import UserFactory, StaffFactory, SuperuserFactory
 from core.Category.models import Category
 from core.Category.factories import CategoryFactory
+from core.Post.factories import PostFactory
 
 
 class ApiCategoryViewTests(TestCase):
@@ -115,3 +116,25 @@ class ApiCategoryViewTests(TestCase):
                                    HTTP_HOST='api', format='json', data={'slug': category.slug})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data['category']['id'], category.id)
+
+    def test_category_archive(self):
+        category = CategoryFactory.create()
+        post = PostFactory.create(category=category)
+        client = APIClient()
+        client.force_authenticate(self.superuser)
+        response = client.post(reverse('api:categories-archive', args=[category.id], host='api'),
+                               HTTP_HOST='api', format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, category.id)
+        self.assertContains(response, post.id)
+
+    def test_category_restore(self):
+        category = CategoryFactory.create()
+        post = PostFactory.create(category=category)
+        client = APIClient()
+        client.force_authenticate(self.superuser)
+        response = client.post(reverse('api:categories-restore', args=[category.id], host='api'),
+                               HTTP_HOST='api', format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, category.id)
+        self.assertContains(response, post.id)
