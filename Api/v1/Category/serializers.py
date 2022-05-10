@@ -12,7 +12,8 @@ class CategorySerializer(serializers.ModelSerializer):
 class CategoryCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['name', 'position']
+        fields = ['id', 'slug', 'name', 'position']
+        read_only_fields = ['id', 'slug']
 
     def validate(self, data):
         name = data['name']

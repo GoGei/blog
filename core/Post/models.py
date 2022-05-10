@@ -1,4 +1,7 @@
 from django.db import models
+from django.utils.functional import cached_property
+
+from core.Likes.models import PostLike
 from core.Utils.Mixins.models import CrmMixin, SlugifyMixin
 
 
@@ -23,3 +26,11 @@ class Post(CrmMixin, SlugifyMixin):
     @property
     def created_date(self):
         return self.created_stamp.strftime('%d %B, %Y')
+
+    @cached_property
+    def likes_counter(self):
+        return PostLike.objects.select_related('post').filter(post=self, is_liked=True).count()
+
+    @cached_property
+    def dislikes_counter(self):
+        return PostLike.objects.select_related('post').filter(post=self, is_liked=False).count()

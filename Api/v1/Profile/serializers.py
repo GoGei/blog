@@ -29,4 +29,5 @@ class ProfileUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'phone']
+        fields = ['id', 'email', 'first_name', 'last_name', 'phone']
+        read_only = ['id']

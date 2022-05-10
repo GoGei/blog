@@ -3,11 +3,13 @@ from factory import SubFactory
 
 from core.Post.factories import PostFactory
 from core.Comment.factories import CommentFactory
+from core.User.factories import UserFactory
 from .models import PostLike, CommentLike
 
 
 class PostLikeFactory(factory.DjangoModelFactory):
     is_liked = True
+    user = SubFactory(UserFactory)
     post = SubFactory(PostFactory)
 
     class Meta:
@@ -16,6 +18,7 @@ class PostLikeFactory(factory.DjangoModelFactory):
 
 class CommentLikeFactory(factory.DjangoModelFactory):
     is_liked = True
+    user = SubFactory(UserFactory)
     comment = SubFactory(CommentFactory)
 
     class Meta:

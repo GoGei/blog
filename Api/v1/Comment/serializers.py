@@ -39,8 +39,8 @@ class CommentListPostSerializer(serializers.ModelSerializer):
         return CommentLike.objects.select_related('comment').filter(comment=obj, is_liked=False).count()
 
 
-
 class CommentCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['id', 'author', 'post', 'text']
+        read_only_fields = ['id']
