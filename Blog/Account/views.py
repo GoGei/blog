@@ -84,7 +84,7 @@ def render_posts_liked(request):
 
 @login_required
 def render_post_delete(request):
-    post_id = request.GET.get('post', None)
+    post_id = request.GET.get('post')
     post = get_object_or_404(Post, pk=post_id)
     content = render_to_string(
         'Blog/Account/profile_post_delete_modal.html',
@@ -94,7 +94,7 @@ def render_post_delete(request):
 
 @login_required
 def render_post(request):
-    post_id = request.GET.get('post_id', None)
+    post_id = request.GET.get('post_id')
     post = get_object_or_404(Post, pk=post_id)
     content = render_to_string(
         'Blog/Account/profile_post_card.html',

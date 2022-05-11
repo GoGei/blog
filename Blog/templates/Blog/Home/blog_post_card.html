@@ -1,4 +1,4 @@
-<div class="blog-post">
+<div class="blog-post" data-post-id="{{ post.id }}">
     <h2 class="blog-post-title">{{ post.title|truncatechars:30 }}</h2>
     <h4>{{ post.category.name|truncatechars:30 }}</h4>
     <p class="blog-post-meta">Created {{ post.created_date }} by <a href="#">{{ post.author.label }}</a></p>
