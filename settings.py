@@ -86,9 +86,16 @@ MIDDLEWARE = [
 CORS_ALLOW_ALL_ORIGINS = True
 # SESSION_COOKIE_SECURE = True  # Block login (not actually login)
 # CSRF_COOKIE_SECURE = True  # Block login (not set csrf token)
-# SESSION_COOKIE_HTTPONLY = False  # add session id to ajax
 CSRF_COOKIE_DOMAIN = '.blog.local'
 SESSION_COOKIE_DOMAIN = '.blog.local'
+
+# SESSION_COOKIE_HTTPONLY = True  # add session id to ajax
+# # allow to add sessionid to ajax
+# from corsheaders.defaults import default_headers
+#
+# CORS_ALLOW_HEADERS = list(default_headers) + [
+#     "sessionid",
+# ]
 
 INTERNAL_IPS = [
     "127.0.0.1",
