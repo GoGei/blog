@@ -55,38 +55,40 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'User.User'
 
+# MIDDLEWARE = [
+#     'django_hosts.middleware.HostsRequestMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.middleware.locale.LocaleMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'corsheaders.middleware.CorsMiddleware',
+#     'django.middleware.security.SecurityMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#     'django_hosts.middleware.HostsResponseMiddleware',
+# ]
+
 MIDDLEWARE = [
     'django_hosts.middleware.HostsRequestMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
-# CORS_ORIGIN_WHITELIST = [
-#     'http://blog.local',
-# ]
-# CSRF_COOKIE_DOMAIN = '.blog.local'
-# SESSION_COOKIE_DOMAIN = '.blog.local'
-# CSRF_TRUSTED_ORIGINS = ['.blog.local']
-# CSRF_COOKIE_SECURE = False
-# CSRF_COOKIE_HTTPONLY = False
-#
-# AUTHENTICATION_BACKENDS = [
-#     'django.contrib.auth.backends.ModelBackend'
-# ]
-
-# redefine in local_settings
-# if DEBUG and DEBUG_TOOLBAR:
-#     INSTALLED_APPS += ('debug_toolbar', )
-#     MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware', )
+CORS_ALLOW_ALL_ORIGINS = True
+# SESSION_COOKIE_SECURE = True  # Block login (not actually login)
+# CSRF_COOKIE_SECURE = True  # Block login (not set csrf token)
+# SESSION_COOKIE_HTTPONLY = False  # add session id to ajax
+CSRF_COOKIE_DOMAIN = '.blog.local'
+SESSION_COOKIE_DOMAIN = '.blog.local'
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -171,7 +173,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 50,
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [

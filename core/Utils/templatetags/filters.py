@@ -13,7 +13,8 @@ def get_message_class(message_tag):
         'error': 'alert-danger',
         'default': 'alert-dark',
     }
-    return message_tag_map.get(message_tag, 'default')
+    default = message_tag_map.get('default')
+    return message_tag_map.get(message_tag, default)
 
 
 @register.simple_tag
@@ -47,5 +48,7 @@ def url_replace_multiple(request, fields, values):
     if len(fields) == len(values):
         for field, value in zip(fields, values):
             _dict[field] = value
+    else:
+        raise ValueError('Length of fields and values have to be equal!')
 
     return _dict.urlencode()
