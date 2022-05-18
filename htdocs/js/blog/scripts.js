@@ -15,10 +15,8 @@ function getCookie(name) {
 }
 
 $.ajaxSetup({
-    headers: {
-        'X-CSRFToken': getCookie('csrftoken'),
-        // 'sessionid': getCookie('sessionid'),
-    },
+    xhrFields: {withCredentials: true},
+    headers: {'X-CSRFToken': getCookie('csrftoken')},
 });
 
 

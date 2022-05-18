@@ -55,20 +55,6 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'User.User'
 
-# MIDDLEWARE = [
-#     'django_hosts.middleware.HostsRequestMiddleware',
-#     'django.middleware.csrf.CsrfViewMiddleware',
-#     'django.contrib.sessions.middleware.SessionMiddleware',
-#     'django.middleware.locale.LocaleMiddleware',
-#     'django.middleware.common.CommonMiddleware',
-#     'corsheaders.middleware.CorsMiddleware',
-#     'django.middleware.security.SecurityMiddleware',
-#     'django.contrib.auth.middleware.AuthenticationMiddleware',
-#     'django.contrib.messages.middleware.MessageMiddleware',
-#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-#     'django_hosts.middleware.HostsResponseMiddleware',
-# ]
-
 MIDDLEWARE = [
     'django_hosts.middleware.HostsRequestMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -84,18 +70,9 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
-# SESSION_COOKIE_SECURE = True  # Block login (not actually login)
-# CSRF_COOKIE_SECURE = True  # Block login (not set csrf token)
+CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_DOMAIN = '.blog.local'
 SESSION_COOKIE_DOMAIN = '.blog.local'
-
-# SESSION_COOKIE_HTTPONLY = True  # add session id to ajax
-# # allow to add sessionid to ajax
-# from corsheaders.defaults import default_headers
-#
-# CORS_ALLOW_HEADERS = list(default_headers) + [
-#     "sessionid",
-# ]
 
 INTERNAL_IPS = [
     "127.0.0.1",
