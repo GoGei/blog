@@ -66,7 +66,7 @@ class Command(BaseCommand):
         for _ in range(category_counter):
             category = CategoryFactory.create()
             category.save()
-        self.stdout.write(self.style.SUCCESS('Created %s Category instances') % self.CATEGORY_COUNTER)
+        self.stdout.write(self.style.SUCCESS('Created %s Category instances') % category_counter)
 
         for k in range(user_counter):
             user = UserFactory.create()

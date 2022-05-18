@@ -17,6 +17,7 @@ BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__))) + '/'
 SECRET_KEY = 'secret-key'
 
 DEBUG = False
+INSECURE = False
 API_DOCUMENTATION = True
 DEBUG_TOOLBAR = True
 

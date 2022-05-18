@@ -27,7 +27,7 @@ def _launch_django(project_path):
                 server_address = dj_settings.SITE_URL
 
     with lcd(project_path):
-        insecure = not dj_settings.DEBUG
+        insecure = not dj_settings.DEBUG and dj_settings.INSECURE
         local(f'./manage.py runserver {server_address}:{port} {"--insecure" if insecure else ""}', capture=False)
 
 
@@ -87,9 +87,3 @@ def create_graph_models(*args):
     with cd(PROJECT_ROOT):
         local('mkdir -p graphs')
         local(f'./manage.py graph_models -a {models} -o {dot_file_name}')
-
-
-@task
-def fill_test_db():
-    with cd(PROJECT_ROOT):
-        local(f'./manage.py fill_db_with_test_data -c True -uc 2 -cc 5 -pc 3 -mc 2 -plc 3 -clc 5')
