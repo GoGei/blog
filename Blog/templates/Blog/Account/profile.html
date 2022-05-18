@@ -5,16 +5,17 @@
     <div class="container bootstrap snippet">
         <div class="row">
             <div class="col-sm-3">
-                <ul class="list-group" id="profile-data-container" data-profile-data-url="{% host_url 'api:profile' host 'api' %}">
+                <ul class="list-group" id="profile-data-container"
+                    data-profile-data-url="{% host_url 'api:profile' host 'api' %}">
                     <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
                 </ul>
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-8">
                 {% url_get_field request 'tab' as activated %}
                 <ul class="nav nav-tabs">
                     <li class="nav-item "><a
                             class="nav-link {% if activated == 'posts' or activated == None %}active{% endif %}"
-                            href="?{% url_replace request 'tab' 'posts' %}">Info</a></li>
+                            href="?{% url_replace request 'tab' 'posts' %}">Posts</a></li>
                     <li class="nav-item"><a
                             class="nav-link {% if activated == 'edit' %}active{% endif %}"
                             href="?{% url_replace request 'tab' 'edit' %}">Edit Profile</a>
@@ -36,6 +37,11 @@
                     </div>
                 </div>
             </div>
+            <aside class="col-sm-1">
+                <button type="button" class="btn btn-secondary btn-floating btn-lg" id="btn-back-to-top">
+                    Get back to top
+                </button>
+            </aside>
         </div>
     </div>
 {% endblock %}

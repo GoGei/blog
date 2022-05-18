@@ -23,15 +23,17 @@ $.ajaxSetup({
 $(document).ready(function () {
     let backToTopButton = document.getElementById("btn-back-to-top");
 
-    window.onscroll = function () {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            backToTopButton.style.display = "block";
-        } else {
-            backToTopButton.style.display = "none";
-        }
-    };
+    if (backToTopButton) {
+        window.onscroll = function () {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        };
 
-    backToTopButton.addEventListener("click", backToTop);
+        backToTopButton.addEventListener("click", backToTop);
+    }
 
     function backToTop() {
         window.scrollTo({
