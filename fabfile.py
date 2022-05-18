@@ -71,6 +71,7 @@ def deploy_local(branch=None):
 
 @task
 def check():
+    local('python manage.py test')
     local('python manage.py check')
     local('time flake8 ./core ./Blog ./Api')
 
