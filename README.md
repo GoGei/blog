@@ -141,5 +141,5 @@ Optional: \
 DATABASE_TEST_HOST=<db_host> (localhost by default) \
 
 ### Tests counter: **101**
-### Files coverage: **90%**
+### Files coverage: **89%**
 ### Lines coverage: **96%**
