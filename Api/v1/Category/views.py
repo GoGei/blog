@@ -56,6 +56,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         category = self.get_object()
         posts = category.post_set.all()
         posts.archive(request.user)
+        category.archive(request.user)
         category_data = self.category_archive_serializer_class(category).data
         posts_data = self.posts_archive_serializer_class(posts, many=True).data
         return Response({'category': category_data, 'posts': posts_data}, status=status.HTTP_200_OK)
@@ -65,6 +66,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         category = self.get_object()
         posts = category.post_set.all()
         posts.restore(request.user)
+        category.restore(request.user)
         category_data = self.category_archive_serializer_class(category).data
         posts_data = self.posts_archive_serializer_class(posts, many=True).data
         return Response({'category': category_data, 'posts': posts_data}, status=status.HTTP_200_OK)

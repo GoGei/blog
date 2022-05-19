@@ -37,6 +37,7 @@ AddPostModalForm = {};
                 dataType: 'json',
                 data: function (params) {
                     return {
+                        is_active: true,
                         search: params.term,
                         page: params.page,
                         format: 'json'
