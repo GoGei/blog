@@ -8,7 +8,6 @@ from django_hosts import reverse
 from django_hosts.resolvers import reverse as reverse_host
 
 from .forms import LoginForm, RegistrationForm
-from core.Utils.logger import log
 
 
 def login_view(request):
@@ -48,7 +47,6 @@ def register_user(request):
     if request.POST and request.is_ajax():
         if form.is_valid():
             user = form.save()
-            log.info('User %s registered!' % user.email)
             login(request, user=user)
             rc = {
                 'redirect_url': reverse('blog-index'),
