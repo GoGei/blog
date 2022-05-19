@@ -76,8 +76,16 @@ LoadPosts = {};
         return data;
     }
 
+    function loadInitPostSearch(){
+        let url = new URL(document.location.href);
+        if (url.searchParams.has('search')){
+            $('#posts-search').val(url.searchParams.get('search'));
+        }
+    }
+
     function init() {
         loadPosts();
+        loadInitPostSearch();
     }
 
     obj.init = init;

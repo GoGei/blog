@@ -28,6 +28,7 @@
                     <h4 class="font-italic">Categories</h4>
                     <input class="form-control mr-sm-2" type="search" placeholder="Search for category.."
                            aria-label="Search" id="categories-search">
+                    <a type="button" class="btn btn-light" id="clear-category" hidden="hidden">Clear category</a>
                     <ol class="list-unstyled mb-0" id="categories-container"
                         data-categories-url="{% host_url 'api:categories-list' host 'api' %}"
                         data-categories-render-url="{% url 'blog-render-categories' %}">

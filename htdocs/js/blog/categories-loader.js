@@ -26,6 +26,7 @@ $(document).ready(function () {
     });
 
     updatePageHeader();
+    updateClearCategory();
 });
 
 
@@ -42,6 +43,24 @@ $('#categories-search').on('keyup', function () {
         }
     });
 });
+
+
+function updateClearCategory(){
+    let $clearCategory = $('#clear-category');
+    let url = new URL(document.location.href);
+    if (url.searchParams.has('category')){
+        $clearCategory.removeAttr('hidden');
+    } else {
+        $clearCategory.attr('hidden', 'hidden');
+    }
+
+    $clearCategory.unbind();
+    $clearCategory.click(function (){
+        url.searchParams.delete('category');
+        window.history.pushState(null, '', url.toString());
+        location.reload();
+    });
+}
 
 
 $('#categories-container').on('click', 'li', function () {
