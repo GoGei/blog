@@ -12,7 +12,7 @@ faker = Faker()
 class PostFactory(factory.DjangoModelFactory):
     author = SubFactory(UserFactory)
     category = SubFactory(CategoryFactory)
-    title = fuzzy.FuzzyText(length=100)
+    title = fuzzy.FuzzyText(length=30)
     text = faker.text()
 
     slug = factory.LazyAttribute(lambda o: slugify(o.title))

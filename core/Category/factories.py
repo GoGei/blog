@@ -5,7 +5,7 @@ from .models import Category
 
 
 class CategoryFactory(factory.DjangoModelFactory):
-    name = fuzzy.FuzzyText(length=50)
+    name = fuzzy.FuzzyText(length=30)
     position = fuzzy.FuzzyInteger(low=0, high=100)
 
     slug = factory.LazyAttribute(lambda o: slugify(o.name))
