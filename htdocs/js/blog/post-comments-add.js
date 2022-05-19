@@ -28,7 +28,7 @@ PostCommentAdd = {};
             url: $commentContainer.data('post-comment-render-url'),
             data: {'comment_id': commentId},
             success: function (response) {
-                $commentContainer.prepend(response.content);
+                $commentContainer.append(response.content);
                 reInitPostCommentActions();
             }
         })

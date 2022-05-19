@@ -21,9 +21,10 @@ class CommentViewSet(viewsets.ModelViewSet):
         'list': CommentListSerializer,
     }
 
-    filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend]
     search_fields = ['post__title', 'author__email']
     filterset_fields = ['post', 'author']
+    ordering_fields = ['id', 'created_stamp']
 
     def get_serializer_class(self):
         serializer = self.serializer_map.get(self.action, self.serializer_class)

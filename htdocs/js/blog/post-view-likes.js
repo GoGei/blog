@@ -56,7 +56,7 @@ function getPostLikeUrl($current, activityName){
     let objId = $current.data('post-id');
     let host = $(location).attr('host');
     let protocol = $(location).attr('protocol');
-    let url = `${protocol}//api.${host}/posts/${objId}/${activityName}/`;
+    let url = `${protocol}//api.${host}/v1/posts/${objId}/${activityName}/`;
     console.log(url);
     return url;
 }

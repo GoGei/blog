@@ -29,9 +29,10 @@ def blog_post_view(request, post_slug):
 def render_post_comment(request):
     comment_id = request.GET.get('comment_id')
     comment = get_object_or_404(Comment, pk=comment_id)
+    setattr(comment, 'is_author', comment.author.id == request.user.id)
     content = render_to_string(
         'Blog/Home/blog_comment_card.html',
-        {'comment': comment})
+        {'comment': comment}, request=request)
     return JsonResponse({'content': content})
 
 
@@ -39,7 +40,7 @@ def render_post_comments(request):
     data = json.loads(request.GET.get('comments'))
     content = render_to_string(
         'Blog/Home/blog_post_comments_render.html',
-        {'comments': data})
+        {'comments': data}, request=request)
     return JsonResponse({'content': content})
 
 
@@ -47,7 +48,7 @@ def render_posts(request):
     data = json.loads(request.GET.get('posts'))
     content = render_to_string(
         'Blog/Home/blog_posts_render.html',
-        {'posts': data})
+        {'posts': data}, request=request)
     return JsonResponse({'content': content})
 
 

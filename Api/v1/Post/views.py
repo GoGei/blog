@@ -168,6 +168,12 @@ class PostViewSet(viewsets.ModelViewSet):
 
         queryset = queryset.annotate(is_author=Case(When(author_id=user.id, then=True), default=False))  # noqa
 
+        params = request.GET
+        if params:
+            order_by = params.get('order_by')
+            if order_by:
+                queryset = queryset.order_by(order_by)
+
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)

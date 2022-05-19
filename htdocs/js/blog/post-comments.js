@@ -20,6 +20,7 @@ PostCommentsList = {};
             $.ajax({
                 type: 'GET',
                 url: requestUrl,
+                data: {'order_by': 'created_stamp'},
                 success: function (comments) {
                     container.data('post-comments-next-url', comments.next);
                     let commentsData = JSON.stringify(comments.results);
