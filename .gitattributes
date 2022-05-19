@@ -8,4 +8,4 @@ htdocs/css/** linguist-vendored
 htdocs/images/** linguist-vendored
 htdocs/locales/** linguist-vendored
 
-# htdocs/js/* linguist-vendored
+htdocs/js/* linguist-vendored
