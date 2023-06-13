@@ -21,14 +21,14 @@ def _launch_django(project_path):
         port = random.randrange(1024, 5000)
 
     server_address = '127.0.0.1'
-    if os.path.exists('/etc/hosts'):
-        with open('/etc/hosts') as f:
+    hosts_path = 'c:\Windows\System32\Drivers\etc\hosts' if os.name == 'nt' else '/etc/hosts'
+    if os.path.exists(hosts_path):
+        with open(hosts_path) as f:
             if f.read().find(dj_settings.SITE_URL) != -1:
                 server_address = dj_settings.SITE_URL
 
     with lcd(project_path):
-        insecure = not dj_settings.DEBUG and dj_settings.INSECURE
-        local(f'./manage.py runserver {server_address}:{port} {"--insecure" if insecure else ""}', capture=False)
+        local(f'python manage.py runserver {server_address}:{port}', capture=False)
 
 
 @task
